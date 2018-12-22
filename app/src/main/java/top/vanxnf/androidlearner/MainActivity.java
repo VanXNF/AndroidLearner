@@ -132,7 +132,7 @@ public class MainActivity extends BaseActivity
                 fragment.putNewBundle(newBundle);
 
                 myHome.start(fragment, BaseFragment.SINGLETASK);
-            } else if (id == R.id.nav_official_account) {
+            } else if (id == R.id.nav_category) {
                 // TODO: 18-12-21 official account page
                 Toast.makeText(this, "敬请期待", Toast.LENGTH_SHORT).show();
             }

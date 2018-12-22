@@ -7,9 +7,9 @@
             android:icon="@drawable/ic_home_black_24dp"
             android:title="@string/home" />
         <item
-            android:id="@+id/nav_official_account"
-            android:icon="@drawable/ic_account_balance_black_24dp"
-            android:title="@string/official_account" />
+            android:id="@+id/nav_category"
+            android:icon="@drawable/ic_category_black_24dp"
+            android:title="@string/category" />
     </group>
 
     <!--<item android:title="@string/system">-->

@@ -28,10 +28,10 @@ public class HomeArticleAdapter extends BaseQuickAdapter<Article.DataBean.Articl
                 .setText(R.id.article_time_text, item.getNiceDate())
                 .setText(R.id.article_category_text, item.getSuperChapterName() + "/" + item.getChapterName())
                 .setText(R.id.article_title_text, item.getTitle());
-        if (!TextUtils.isEmpty(item.getDesc())) {
-            TextView descText = helper.getView(R.id.article_desc_text);
-            ImageView projectImage = helper.getView(R.id.article_project_image);
 
+        TextView descText = helper.getView(R.id.article_desc_text);
+        ImageView projectImage = helper.getView(R.id.article_project_image);
+        if (!TextUtils.isEmpty(item.getDesc())) {
             descText.setText(item.getDesc());
             Glide.with(mContext)
                     .load(item.getEnvelopePic())
@@ -39,6 +39,9 @@ public class HomeArticleAdapter extends BaseQuickAdapter<Article.DataBean.Articl
 
             descText.setVisibility(View.VISIBLE);
             projectImage.setVisibility(View.VISIBLE);
+        } else {
+            descText.setVisibility(View.GONE);
+            projectImage.setVisibility(View.GONE);
         }
     }
 }

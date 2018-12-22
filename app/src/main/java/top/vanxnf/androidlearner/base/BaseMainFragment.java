@@ -14,7 +14,7 @@ public class BaseMainFragment extends BaseFragment {
     }
 
     protected void initToolbarNav(Toolbar toolbar, boolean isHome) {
-        toolbar.setNavigationIcon(R.drawable.ic_menu_black_24dp);
+        toolbar.setNavigationIcon(R.drawable.ic_menu_white_24dp);
         toolbar.setNavigationOnClickListener((v) -> {
             if (mOpenDrawerListener != null) {
                 mOpenDrawerListener.onOpenDrawer();

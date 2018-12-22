@@ -52,9 +52,11 @@ public class HomeModel implements HomeContract.Model {
                 toggle[0] = 1;
             }
         });
+        // TODO: 18-12-22 等待数据加载完成
         while (flag[0]) {
             try {
-                Thread.sleep(500);
+                Thread.sleep(5);
+                Log.d(TAG, "getArticleData: wait for data");
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }

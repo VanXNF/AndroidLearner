@@ -46,7 +46,7 @@ public class HomeFragment extends BaseMainFragment implements HomeContract.View 
     @Override
     public void onSupportVisible() {
         super.onSupportVisible();
-        mImmersionBar = ImmersionBar.with(this).titleBar(R.id.toolbar).statusBarDarkFont(true);
+        mImmersionBar = ImmersionBar.with(this).titleBar(R.id.toolbar);
         mImmersionBar.init();
     }
 
@@ -70,10 +70,11 @@ public class HomeFragment extends BaseMainFragment implements HomeContract.View 
             doToast(getText(R.string.network_error_please_try_again));
         }
         mAdapter = new HomeArticleAdapter(articleDataBeans);
+        mAdapter.openLoadAnimation(BaseQuickAdapter.SLIDEIN_LEFT);
         mAdapter.setOnItemClickListener((BaseQuickAdapter adapter, View view, int position) -> {
             start(WebFragment.newInstance(articleDataBeans.get(position).getLink(), articleDataBeans.get(position).getTitle()));
         });
-        mAdapter.setOnLoadMoreListener(() -> mRecycler.postDelayed(() -> mPresenter.loadMoreArticleDataToView(), 1000), mRecycler);
+        mAdapter.setOnLoadMoreListener(() -> mRecycler.post(() -> mPresenter.loadMoreArticleDataToView()), mRecycler);
         mRecycler.setLayoutManager(new LinearLayoutManager(mActivity));
         mRecycler.setAdapter(mAdapter);
     }
@@ -83,7 +84,7 @@ public class HomeFragment extends BaseMainFragment implements HomeContract.View 
         if (dataBeans != null) {
             articleDataBeans.addAll(dataBeans);
             post(()->{
-                mAdapter.setNewData(articleDataBeans);
+                mAdapter.addData(dataBeans);
                 mAdapter.loadMoreComplete();
             });
         } else {
@@ -94,17 +95,13 @@ public class HomeFragment extends BaseMainFragment implements HomeContract.View 
     @Override
     public void refreshArticleList(List<Article.DataBean.ArticleData> dataBeans) {
         if (dataBeans != null) {
-            if (articleDataBeans != null) {
-                articleDataBeans.clear();
-                articleDataBeans.addAll(dataBeans);
-            } else {
-                articleDataBeans = dataBeans;
-            }
-            mRecycler.postDelayed(()->{
+            articleDataBeans = new ArrayList<>();
+            articleDataBeans.addAll(dataBeans);
+            mRefresh.postDelayed(() -> {
                 mAdapter.setNewData(articleDataBeans);
                 mAdapter.notifyDataSetChanged();
                 mRefresh.setRefreshing(false);
-            }, 1000);
+            }, 2000);
         } else {
             doToast(getText(R.string.network_error_please_try_again));
         }
@@ -116,9 +113,7 @@ public class HomeFragment extends BaseMainFragment implements HomeContract.View 
         mToolbar = view.findViewById(R.id.toolbar);
         mToolbar.setTitle(R.string.home);
         initToolbarNav(mToolbar, true);
-        mRefresh.setOnRefreshListener(() -> {
-            mPresenter.refreshArticleDataToView();
-        });
+        mRefresh.setOnRefreshListener(() -> mPresenter.refreshArticleDataToView());
     }
 
     private void doToast(CharSequence text) {

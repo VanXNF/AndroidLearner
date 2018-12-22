@@ -6,6 +6,7 @@
     <string name="home">首页</string>
     <string name="welcome">欢迎你</string>
     <string name="tourist">游客</string>
+    <string name="category">类别</string>
     <string name="official_account">公众号</string>
     <string name="press_again_exit">再次点击退出</string>
     <string name="network_error_please_try_again">网络异常，请重试</string>

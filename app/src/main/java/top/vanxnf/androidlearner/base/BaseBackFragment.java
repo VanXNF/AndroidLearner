@@ -1,4 +1,4 @@
-package top.vanxnf.androidlearner.view.base;
+package top.vanxnf.androidlearner.base;
 
 import androidx.appcompat.widget.Toolbar;
 import top.vanxnf.androidlearner.R;

@@ -1,4 +1,4 @@
-package top.vanxnf.androidlearner.view.base;
+package top.vanxnf.androidlearner.base;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;

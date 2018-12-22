@@ -1,4 +1,4 @@
-package top.vanxnf.androidlearner.view.base;
+package top.vanxnf.androidlearner.base;
 
 import android.content.Context;
 

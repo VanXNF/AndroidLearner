@@ -1,8 +1,8 @@
-package top.vanxnf.androidlearner.contract;
+package top.vanxnf.androidlearner.home.contract;
 
 import java.util.List;
 
-import top.vanxnf.androidlearner.model.entity.Article;
+import top.vanxnf.androidlearner.home.model.entity.Article;
 
 
 public interface HomeContract {

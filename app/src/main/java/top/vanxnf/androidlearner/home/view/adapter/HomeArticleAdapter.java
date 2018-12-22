@@ -1,4 +1,4 @@
-package top.vanxnf.androidlearner.view.adapter;
+package top.vanxnf.androidlearner.home.view.adapter;
 
 import android.text.TextUtils;
 import android.view.View;
@@ -13,7 +13,7 @@ import java.util.List;
 
 import androidx.annotation.Nullable;
 import top.vanxnf.androidlearner.R;
-import top.vanxnf.androidlearner.model.entity.Article;
+import top.vanxnf.androidlearner.home.model.entity.Article;
 
 
 public class HomeArticleAdapter extends BaseQuickAdapter<Article.DataBean.ArticleData, BaseViewHolder> {

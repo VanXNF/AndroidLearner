@@ -10,15 +10,17 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
+import com.gyf.barlibrary.ImmersionBar;
 
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import me.yokeyword.fragmentation.ISupportFragment;
-import top.vanxnf.androidlearner.view.base.BaseActivity;
-import top.vanxnf.androidlearner.view.base.BaseFragment;
-import top.vanxnf.androidlearner.view.base.BaseMainFragment;
-import top.vanxnf.androidlearner.view.HomeFragment;
+import top.vanxnf.androidlearner.home.view.HomeFragment;
+import top.vanxnf.androidlearner.base.BaseActivity;
+import top.vanxnf.androidlearner.base.BaseFragment;
+import top.vanxnf.androidlearner.base.BaseMainFragment;
+
 
 public class MainActivity extends BaseActivity
         implements NavigationView.OnNavigationItemSelectedListener, BaseMainFragment.OnFragmentOpenDrawerListener {
@@ -34,11 +36,12 @@ public class MainActivity extends BaseActivity
     private TextView mTvName;   // NavigationView上的名字
     private ImageView mImgNav;  // NavigationView上的头像
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         BaseFragment fragment = findFragment(HomeFragment.class);
         if (fragment == null) {
             loadRootFragment(R.id.main_frame_container, HomeFragment.newInstance());
@@ -158,5 +161,9 @@ public class MainActivity extends BaseActivity
 
         }, 300);
         return true;
+    }
+
+    public DrawerLayout getmDrawer() {
+        return mDrawer;
     }
 }

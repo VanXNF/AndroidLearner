@@ -8,4 +8,9 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="Toolbar_TextAppearance_Black">
+        <item name="android:textSize">@dimen/sp_15</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
+
 </resources>

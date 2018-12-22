@@ -1,4 +1,4 @@
-package top.vanxnf.androidlearner.model;
+package top.vanxnf.androidlearner.home.model;
 
 import android.util.Log;
 
@@ -11,8 +11,8 @@ import java.util.List;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
-import top.vanxnf.androidlearner.contract.HomeContract;
-import top.vanxnf.androidlearner.model.entity.Article;
+import top.vanxnf.androidlearner.home.contract.HomeContract;
+import top.vanxnf.androidlearner.home.model.entity.Article;
 
 import top.vanxnf.androidlearner.util.HttpUtil;
 
@@ -34,6 +34,7 @@ public class HomeModel implements HomeContract.Model {
     @Override
     public List<Article.DataBean.ArticleData> getArticleData(int page) {
         final boolean[] flag = {true};
+        final int[] toggle = {0};
         currentPage = page;
         HttpUtil.sendOkHttpRequest(API_PREFIX + String.valueOf(currentPage) + API_SUFFIX, new Callback() {
             @Override
@@ -48,6 +49,7 @@ public class HomeModel implements HomeContract.Model {
                 Log.d(TAG, "onResponse: get article page "+ String.valueOf(currentPage) + " success");
                 articles.add(new Gson().fromJson(json, Article.class));
                 flag[0] = false;
+                toggle[0] = 1;
             }
         });
         while (flag[0]) {
@@ -57,8 +59,14 @@ public class HomeModel implements HomeContract.Model {
                 e.printStackTrace();
             }
         }
-        Log.d(TAG, "getArticleData: return success " +  articles.get(currentPage).getData().getDatas().size());
-        return articles.get(currentPage).getData().getDatas();
+        if (toggle[0] == 1) {
+            Log.d(TAG, "getArticleData: return success");
+            return articles.get(currentPage).getData().getDatas();
+        } else {
+            Log.d(TAG, "getArticleData: return failure");
+            return null;
+        }
+
     }
 
     @Override

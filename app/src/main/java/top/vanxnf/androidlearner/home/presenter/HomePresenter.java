@@ -1,7 +1,7 @@
-package top.vanxnf.androidlearner.presenter;
+package top.vanxnf.androidlearner.home.presenter;
 
-import top.vanxnf.androidlearner.contract.HomeContract;
-import top.vanxnf.androidlearner.model.HomeModel;
+import top.vanxnf.androidlearner.home.contract.HomeContract;
+import top.vanxnf.androidlearner.home.model.HomeModel;
 
 public class HomePresenter implements HomeContract.Presenter {
 

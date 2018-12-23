@@ -5,6 +5,8 @@
     <string name="navigation_drawer_close">关闭侧边栏</string>
     <string name="home">首页</string>
     <string name="welcome">欢迎你</string>
+    <string name="user">用户</string>
+    <string name="preview">预览</string>
     <string name="tourist">游客</string>
     <string name="category">类别</string>
     <string name="official_account">公众号</string>

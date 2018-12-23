@@ -1,4 +1,4 @@
-package top.vanxnf.androidlearner;
+package top.vanxnf.androidlearner.app;
 
 import android.app.Application;
 

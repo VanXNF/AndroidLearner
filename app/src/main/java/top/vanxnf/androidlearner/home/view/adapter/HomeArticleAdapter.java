@@ -13,6 +13,7 @@ import java.util.List;
 
 import androidx.annotation.Nullable;
 import top.vanxnf.androidlearner.R;
+import top.vanxnf.androidlearner.glide.GlideApp;
 import top.vanxnf.androidlearner.home.model.entity.Article;
 
 
@@ -33,7 +34,7 @@ public class HomeArticleAdapter extends BaseQuickAdapter<Article.DataBean.Articl
         ImageView projectImage = helper.getView(R.id.article_project_image);
         if (!TextUtils.isEmpty(item.getDesc())) {
             descText.setText(item.getDesc());
-            Glide.with(mContext)
+            GlideApp.with(mContext)
                     .load(item.getEnvelopePic())
                     .into((ImageView) helper.getView(R.id.article_project_image));
 

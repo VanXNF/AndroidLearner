@@ -53,7 +53,7 @@ public class MainActivity extends BaseActivity
         mDrawer = findViewById(R.id.main_drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, mDrawer, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-//        mDrawer.setDrawerListener(toggle);
+        mDrawer.addDrawerListener(toggle);
         toggle.syncState();
 
         mNavigationView = findViewById(R.id.main_nav_view);

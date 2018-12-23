@@ -46,7 +46,7 @@ public class WebFragment extends BaseBackFragment {
     @Override
     public void onSupportVisible() {
         super.onSupportVisible();
-        mImmersionBar = ImmersionBar.with(this).fitsSystemWindows(true).statusBarColor(R.color.red);
+        mImmersionBar = ImmersionBar.with(this).titleBar(R.id.toolbar);
         mImmersionBar.init();
     }
 

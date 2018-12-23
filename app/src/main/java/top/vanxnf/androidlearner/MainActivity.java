@@ -10,12 +10,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
-import com.gyf.barlibrary.ImmersionBar;
 
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import me.yokeyword.fragmentation.ISupportFragment;
+import top.vanxnf.androidlearner.category.view.CategoryFragment;
 import top.vanxnf.androidlearner.home.view.HomeFragment;
 import top.vanxnf.androidlearner.base.BaseActivity;
 import top.vanxnf.androidlearner.base.BaseFragment;
@@ -65,8 +65,8 @@ public class MainActivity extends BaseActivity
         mNavigationView.setItemIconTintList(csl);
 
 //        LinearLayout llNavHeader = (LinearLayout) mNavigationView.getHeaderView(0);
-//        mTvName = (TextView) llNavHeader.findViewById(R.id.tv_name);
-//        mImgNav = (ImageView) llNavHeader.findViewById(R.id.img_nav);
+//        mTvName = (TextView) llNavHeader.findViewById(R.ids.tv_name);
+//        mImgNav = (ImageView) llNavHeader.findViewById(R.ids.img_nav);
 //        llNavHeader.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View v) {
@@ -130,21 +130,19 @@ public class MainActivity extends BaseActivity
                 Bundle newBundle = new Bundle();
                 newBundle.putString("from", "From:" + topFragment.getClass().getSimpleName());
                 fragment.putNewBundle(newBundle);
-
                 myHome.start(fragment, BaseFragment.SINGLETASK);
             } else if (id == R.id.nav_category) {
-                // TODO: 18-12-21 official account page
-                Toast.makeText(this, "敬请期待", Toast.LENGTH_SHORT).show();
+                CategoryFragment fragment = findFragment(CategoryFragment.class);
+                if (fragment == null) {
+                    myHome.startWithPopTo(CategoryFragment.newInstance(), HomeFragment.class, false);
+                } else {
+                    myHome.start(fragment, BaseFragment.SINGLETASK);
+                }
             }
-//            } else if (id == R.id.nav_discover) {
+//            } else if (ids == R.ids.nav_discover) {
 //                DiscoverFragment fragment = findFragment(DiscoverFragment.class);
-//                if (fragment == null) {
-//                    myHome.startWithPopTo(DiscoverFragment.newInstance(), HomeFragment.class, false);
-//                } else {
-//                    // 如果已经在栈内,则以SingleTask模式start
-//                    myHome.start(fragment, SupportFragment.SINGLETASK);
-//                }
-//            } else if (id == R.id.nav_shop) {
+//
+//            } else if (ids == R.ids.nav_shop) {
 //                ShopFragment fragment = findFragment(ShopFragment.class);
 //                if (fragment == null) {
 //                    myHome.startWithPopTo(ShopFragment.newInstance(), HomeFragment.class, false);
@@ -153,9 +151,9 @@ public class MainActivity extends BaseActivity
 ////                        start(fragment, SupportFragment.SINGLETASK);
 //                    myHome.popTo(ShopFragment.class, false);
 //                }
-//            } else if (id == R.id.nav_login) {
+//            } else if (ids == R.ids.nav_login) {
 //                goLogin();
-//            } else if (id == R.id.nav_swipe_back) {
+//            } else if (ids == R.ids.nav_swipe_back) {
 //                startActivity(new Intent(MainActivity.this, SwipeBackSampleActivity.class));
 //            }
 

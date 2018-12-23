@@ -32,6 +32,8 @@ import top.vanxnf.androidlearner.web.WebFragment;
 public class HomeFragment extends BaseMainFragment implements HomeContract.View {
 
     private static final String TAG = "HomeFragment";
+    private static final long WAIT_TIME = 350L;
+    private long TOUCH_TIME = 0;
     private HomePresenter mPresenter;
     private Toolbar mToolbar;
     private SwipeRefreshLayout mRefresh;
@@ -46,7 +48,7 @@ public class HomeFragment extends BaseMainFragment implements HomeContract.View 
     @Override
     public void onSupportVisible() {
         super.onSupportVisible();
-        mImmersionBar = ImmersionBar.with(this).titleBar(R.id.toolbar);
+        mImmersionBar = ImmersionBar.with(this).titleBar(R.id.home_toolbar);
         mImmersionBar.init();
     }
 
@@ -109,8 +111,15 @@ public class HomeFragment extends BaseMainFragment implements HomeContract.View 
     private void initView(View view) {
         mRefresh = view.findViewById(R.id.home_refresh_layout);
         mRecycler = view.findViewById(R.id.home_recycler_view);
-        mToolbar = view.findViewById(R.id.toolbar);
+        mToolbar = view.findViewById(R.id.home_toolbar);
         mToolbar.setTitle(R.string.home);
+        mToolbar.setOnClickListener((v)->{
+            if (System.currentTimeMillis() - TOUCH_TIME < WAIT_TIME) {
+                mRecycler.scrollToPosition(0);
+            } else {
+                TOUCH_TIME = System.currentTimeMillis();
+            }
+        });
         initToolbarNav(mToolbar, true);
         mRefresh.setOnRefreshListener(() -> mPresenter.refreshArticleDataToView());
         articleDataBeans = new ArrayList<>();

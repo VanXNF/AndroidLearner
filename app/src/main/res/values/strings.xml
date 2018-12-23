@@ -11,5 +11,6 @@
     <string name="category">类别</string>
     <string name="official_account">公众号</string>
     <string name="press_again_exit">再次点击退出</string>
-    <string name="network_error_please_try_again">网络异常，请重试</string>
+    <string name="data_error_please_try_again">获取数据为空，请稍后重试</string>
+    <string name="network_error_please_try_again">网络异常，请稍后重试</string>
 </resources>

@@ -64,19 +64,16 @@ public class HomeFragment extends BaseMainFragment implements HomeContract.View 
     public void displayArticle(List<Article.DataBean.ArticleData> dataBeans) {
         if (dataBeans != null) {
             articleDataBeans = dataBeans;
+            post(()-> {
+                mAdapter.setNewData(articleDataBeans);
+                mAdapter.notifyDataSetChanged();
+                mRefresh.setRefreshing(false);
+            });
             Log.d(TAG, "displayArticle: success ");
         } else {
             articleDataBeans = new ArrayList<>();
             doToast(getText(R.string.network_error_please_try_again));
         }
-        mAdapter = new HomeArticleAdapter(articleDataBeans);
-        mAdapter.openLoadAnimation(BaseQuickAdapter.SLIDEIN_LEFT);
-        mAdapter.setOnItemClickListener((BaseQuickAdapter adapter, View view, int position) -> {
-            start(WebFragment.newInstance(articleDataBeans.get(position).getLink(), articleDataBeans.get(position).getTitle()));
-        });
-        mAdapter.setOnLoadMoreListener(() -> mRecycler.post(() -> mPresenter.loadMoreArticleDataToView()), mRecycler);
-        mRecycler.setLayoutManager(new LinearLayoutManager(mActivity));
-        mRecycler.setAdapter(mAdapter);
     }
 
     @Override
@@ -87,6 +84,7 @@ public class HomeFragment extends BaseMainFragment implements HomeContract.View 
                 mAdapter.addData(dataBeans);
                 mAdapter.loadMoreComplete();
             });
+            Log.d(TAG, "displayMoreArticle: success");
         } else {
             doToast(getText(R.string.network_error_please_try_again));
         }
@@ -97,11 +95,12 @@ public class HomeFragment extends BaseMainFragment implements HomeContract.View 
         if (dataBeans != null) {
             articleDataBeans = new ArrayList<>();
             articleDataBeans.addAll(dataBeans);
-            mRefresh.postDelayed(() -> {
+            mRefresh.post(() -> {
                 mAdapter.setNewData(articleDataBeans);
                 mAdapter.notifyDataSetChanged();
                 mRefresh.setRefreshing(false);
-            }, 2000);
+            });
+            Log.d(TAG, "refreshArticleList: success");
         } else {
             doToast(getText(R.string.network_error_please_try_again));
         }
@@ -114,6 +113,16 @@ public class HomeFragment extends BaseMainFragment implements HomeContract.View 
         mToolbar.setTitle(R.string.home);
         initToolbarNav(mToolbar, true);
         mRefresh.setOnRefreshListener(() -> mPresenter.refreshArticleDataToView());
+        articleDataBeans = new ArrayList<>();
+        mAdapter = new HomeArticleAdapter(articleDataBeans);
+        mAdapter.openLoadAnimation(BaseQuickAdapter.SLIDEIN_LEFT);
+        mAdapter.setOnItemClickListener((BaseQuickAdapter adapter, View v, int position) -> {
+            start(WebFragment.newInstance(articleDataBeans.get(position).getLink(), articleDataBeans.get(position).getTitle()));
+        });
+        mAdapter.setOnLoadMoreListener(() -> mRecycler.post(() -> mPresenter.loadMoreArticleDataToView()), mRecycler);
+        mRecycler.setLayoutManager(new LinearLayoutManager(mActivity));
+        mRecycler.setAdapter(mAdapter);
+        mRefresh.setRefreshing(true);
     }
 
     private void doToast(CharSequence text) {

@@ -1,5 +1,6 @@
 package top.vanxnf.androidlearner.home.contract;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import top.vanxnf.androidlearner.home.model.entity.Article;
@@ -7,10 +8,12 @@ import top.vanxnf.androidlearner.home.model.entity.Article;
 
 public interface HomeContract {
     interface Model {
-        List<Article.DataBean.ArticleData> getArticleData();
-        List<Article.DataBean.ArticleData> getArticleData(int page);
-        List<Article.DataBean.ArticleData> loadMoreArticleData();
-        List<Article.DataBean.ArticleData> refreshArticleData();
+        int getCurrentPage();
+        ArrayList<Article> getArticleList();
+        void getArticleData(okhttp3.Callback callback);
+        void getArticleData(int page, okhttp3.Callback callback);
+        void getMoreArticleData(okhttp3.Callback callback);
+        void refreshArticleData(okhttp3.Callback callback);
     }
 
     interface View {
@@ -22,7 +25,7 @@ public interface HomeContract {
 
     interface Presenter {
         void loadArticleDataToView();
-        boolean loadMoreArticleDataToView();
-        boolean refreshArticleDataToView();
+        void loadMoreArticleDataToView();
+        void refreshArticleDataToView();
     }
 }

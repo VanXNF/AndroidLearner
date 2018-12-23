@@ -26,63 +26,55 @@ public class HomeModel implements HomeContract.Model {
     private ArrayList<Article> articles = new ArrayList<>();
 
     @Override
-    public List<Article.DataBean.ArticleData> getArticleData() {
+    public int getCurrentPage() {
+        return currentPage;
+    }
+
+    @Override
+    public ArrayList<Article> getArticleList() {
+        return articles;
+    }
+
+    @Override
+    public void getArticleData(okhttp3.Callback callback) {
         articles.clear();
-        return getArticleData(0);
+        getArticleData(0, callback);
     }
 
     @Override
-    public List<Article.DataBean.ArticleData> getArticleData(int page) {
-        final boolean[] flag = {true};
-        final int[] toggle = {0};
+    public void getArticleData(int page, okhttp3.Callback callback) {
         currentPage = page;
-        HttpUtil.sendOkHttpRequest(API_PREFIX + String.valueOf(currentPage) + API_SUFFIX, new Callback() {
-            @Override
-            public void onFailure(Call call, IOException e) {
-                Log.d(TAG, "onFailure: get article page " + String.valueOf(currentPage) + " failure");
-                flag[0] = false;
-            }
+        HttpUtil.sendOkHttpRequest(API_PREFIX + String.valueOf(currentPage) + API_SUFFIX, callback);
 
-            @Override
-            public void onResponse(Call call, Response response) throws IOException {
-                String json = response.body().string();
-                Log.d(TAG, "onResponse: get article page "+ String.valueOf(currentPage) + " success");
-                articles.add(new Gson().fromJson(json, Article.class));
-                flag[0] = false;
-                toggle[0] = 1;
-            }
-        });
-        // TODO: 18-12-22 等待数据加载完成
-        while (flag[0]) {
-            try {
-                Thread.sleep(5);
-                Log.d(TAG, "getArticleData: wait for data");
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
-        if (toggle[0] == 1) {
-            Log.d(TAG, "getArticleData: return success");
-            return articles.get(currentPage).getData().getDatas();
-        } else {
-            Log.d(TAG, "getArticleData: return failure");
-            return null;
-        }
+//        while (flag[0]) {
+//            try {
+//                Thread.sleep(5);
+//                Log.d(TAG, "getArticleData: wait for data");
+//            } catch (InterruptedException e) {
+//                e.printStackTrace();
+//            }
+//        }
+//        if (toggle[0] == 1) {
+//            Log.d(TAG, "getArticleData: return success");
+//            return articles.get(currentPage).getData().getDatas();
+//        } else {
+//            Log.d(TAG, "getArticleData: return failure");
+//            return null;
+//        }
 
     }
 
     @Override
-    public List<Article.DataBean.ArticleData> loadMoreArticleData() {
+    public void getMoreArticleData(okhttp3.Callback callback) {
         int currentCount = articles.get(currentPage).getData().getCurPage();
         int pageCount = articles.get(currentPage).getData().getPageCount();
         if (currentCount < pageCount) {
-            return getArticleData(currentCount);
+            getArticleData(currentCount, callback);
         }
-        return null;
     }
 
     @Override
-    public List<Article.DataBean.ArticleData> refreshArticleData() {
-        return getArticleData();
+    public void refreshArticleData(okhttp3.Callback callback) {
+        getArticleData(callback);
     }
 }

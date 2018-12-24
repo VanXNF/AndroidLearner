@@ -11,7 +11,7 @@ public class App extends Application {
         super.onCreate();
 
         Fragmentation.builder()
-                .stackViewMode(Fragmentation.BUBBLE)
+                .stackViewMode(Fragmentation.NONE)
                 .debug(true)
                 .handleException((Exception e) -> {})
                 .install();

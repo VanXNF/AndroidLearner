@@ -23,6 +23,7 @@ import com.zhy.view.flowlayout.TagFlowLayout;
 import java.util.ArrayList;
 import java.util.List;
 
+import top.vanxnf.androidlearner.MainActivity;
 import top.vanxnf.androidlearner.R;
 import top.vanxnf.androidlearner.base.BaseBackFragment;
 import top.vanxnf.androidlearner.entity.HotKey;
@@ -30,7 +31,7 @@ import top.vanxnf.androidlearner.search.contract.SearchContract;
 import top.vanxnf.androidlearner.search.presenter.SearchPresenter;
 import top.vanxnf.androidlearner.search.view.adapter.SearchTagAdapter;
 
-@SuppressWarnings("FieldCanBeLocal")
+@SuppressWarnings({"FieldCanBeLocal", "ConstantConditions"})
 public class SearchFragment extends BaseBackFragment implements SearchContract.View {
 
     private Toolbar mToolbar;
@@ -55,6 +56,12 @@ public class SearchFragment extends BaseBackFragment implements SearchContract.V
         mPresent.initRootView(view);
         mPresent.loadHotKeyDataToView();
         return view;
+    }
+
+    @Override
+    public void onSupportVisible() {
+        super.onSupportVisible();
+        ((MainActivity)getActivity()).setDrawerState(true);
     }
 
     @Override

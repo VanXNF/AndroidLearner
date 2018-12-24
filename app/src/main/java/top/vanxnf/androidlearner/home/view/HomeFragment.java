@@ -18,6 +18,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import java.util.ArrayList;
 import java.util.List;
 
+import top.vanxnf.androidlearner.MainActivity;
 import top.vanxnf.androidlearner.R;
 import top.vanxnf.androidlearner.custom.LoadMoreFooterView;
 import top.vanxnf.androidlearner.home.contract.HomeContract;
@@ -30,7 +31,7 @@ import top.vanxnf.androidlearner.base.BaseMainFragment;
 import top.vanxnf.androidlearner.search.view.SearchFragment;
 import top.vanxnf.androidlearner.web.WebFragment;
 
-@SuppressWarnings("FieldCanBeLocal")
+@SuppressWarnings({"FieldCanBeLocal", "ConstantConditions"})
 public class HomeFragment extends BaseMainFragment implements HomeContract.View {
 
     private static final String TAG = "HomeFragment";
@@ -58,6 +59,12 @@ public class HomeFragment extends BaseMainFragment implements HomeContract.View 
     }
 
     @Override
+    public void onSupportVisible() {
+        super.onSupportVisible();
+        ((MainActivity)getActivity()).setDrawerState(false);
+    }
+
+    @Override
     public void initView(View view) {
         mRefresh = view.findViewById(R.id.home_refresh_layout);
         mRecycler = view.findViewById(R.id.home_recycler_view);
@@ -72,7 +79,6 @@ public class HomeFragment extends BaseMainFragment implements HomeContract.View 
         });
         mToolbar.setOnMenuItemClickListener((MenuItem menuItem) -> {
             if (menuItem.getItemId() == R.id.toolbar_search) {
-                // TODO: 18-12-24 start to Search Fragment
                 start(SearchFragment.newInstance());
             }
             return true;

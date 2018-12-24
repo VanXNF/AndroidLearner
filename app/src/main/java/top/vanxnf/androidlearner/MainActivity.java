@@ -65,22 +65,6 @@ public class MainActivity extends BaseActivity
         ColorStateList csl = resource.getColorStateList(R.color.nav_menu_selector, null);
         mNavigationView.setItemTextColor(csl);
         mNavigationView.setItemIconTintList(csl);
-
-//        LinearLayout llNavHeader = (LinearLayout) mNavigationView.getHeaderView(0);
-//        mTvName = (TextView) llNavHeader.findViewById(R.ids.tv_name);
-//        mImgNav = (ImageView) llNavHeader.findViewById(R.ids.img_nav);
-//        llNavHeader.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                mDrawer.closeDrawer(GravityCompat.START);
-//                mDrawer.postDelayed(new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        goLogin();
-//                    }
-//                }, 250);
-//            }
-//        });
     }
 
     @Override
@@ -141,24 +125,6 @@ public class MainActivity extends BaseActivity
                     myHome.start(fragment, BaseFragment.SINGLETASK);
                 }
             }
-//            } else if (ids == R.ids.nav_discover) {
-//                DiscoverFragment fragment = findFragment(DiscoverFragment.class);
-//
-//            } else if (ids == R.ids.nav_shop) {
-//                ShopFragment fragment = findFragment(ShopFragment.class);
-//                if (fragment == null) {
-//                    myHome.startWithPopTo(ShopFragment.newInstance(), HomeFragment.class, false);
-//                } else {
-//                    // 如果已经在栈内,则以SingleTask模式start,也可以用popTo
-////                        start(fragment, SupportFragment.SINGLETASK);
-//                    myHome.popTo(ShopFragment.class, false);
-//                }
-//            } else if (ids == R.ids.nav_login) {
-//                goLogin();
-//            } else if (ids == R.ids.nav_swipe_back) {
-//                startActivity(new Intent(MainActivity.this, SwipeBackSampleActivity.class));
-//            }
-
         }, 300);
         return true;
     }

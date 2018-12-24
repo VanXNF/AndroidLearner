@@ -16,6 +16,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
+import top.vanxnf.androidlearner.MainActivity;
 import top.vanxnf.androidlearner.R;
 import top.vanxnf.androidlearner.base.BaseMainFragment;
 import top.vanxnf.androidlearner.category.contract.CategoryContract;
@@ -48,6 +49,12 @@ public class CategoryFragment extends BaseMainFragment implements CategoryContra
         mPresenter.initRootView(view);
         mPresenter.loadCategoryDataToView();
         return view;
+    }
+
+    @Override
+    public void onSupportVisible() {
+        super.onSupportVisible();
+        ((MainActivity)getActivity()).setDrawerState(false);
     }
 
     @Override

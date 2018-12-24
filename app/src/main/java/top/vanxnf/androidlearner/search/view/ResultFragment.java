@@ -17,6 +17,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import java.util.ArrayList;
 import java.util.List;
 
+import top.vanxnf.androidlearner.MainActivity;
 import top.vanxnf.androidlearner.R;
 import top.vanxnf.androidlearner.base.BaseBackFragment;
 import top.vanxnf.androidlearner.custom.LoadMoreFooterView;
@@ -26,7 +27,7 @@ import top.vanxnf.androidlearner.search.presenter.ResultPresenter;
 import top.vanxnf.androidlearner.search.view.adapter.ResultAdapter;
 import top.vanxnf.androidlearner.web.WebFragment;
 
-@SuppressWarnings("FieldCanBeLocal")
+@SuppressWarnings({"FieldCanBeLocal", "ConstantConditions"})
 public class ResultFragment extends BaseBackFragment implements ResultContract.View {
 
     private static final String KEYWORD = "keyword";
@@ -67,6 +68,12 @@ public class ResultFragment extends BaseBackFragment implements ResultContract.V
         mPresenter.initRootView(view, mKeyword);
         mPresenter.loadArticleToView();
         return view;
+    }
+
+    @Override
+    public void onSupportVisible() {
+        super.onSupportVisible();
+        ((MainActivity)getActivity()).setDrawerState(true);
     }
 
     @Override

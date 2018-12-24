@@ -73,26 +73,12 @@ public class WebFragment extends BaseBackFragment {
                 .createAgentWeb()
                 .ready()
                 .go(url);
-        ((MainActivity) getActivity()).setDrawerState(true);
-
     }
 
     @Override
     public void onSupportVisible() {
         super.onSupportVisible();
         ((MainActivity) getActivity()).setDrawerState(true);
-    }
-
-    @Override
-    public void onSupportInvisible() {
-        super.onSupportInvisible();
-        ((MainActivity) getActivity()).setDrawerState(false);
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        ((MainActivity) getActivity()).setDrawerState(false);
     }
 
     @Override

@@ -148,12 +148,6 @@ public class CategoryDetailFragment extends BaseBackFragment implements DetailCo
     }
 
     @Override
-    public void onDestroy() {
-        super.onDestroy();
-        ((MainActivity) getActivity()).setDrawerState(false);
-    }
-
-    @Override
     protected int setTitleBar() {
         return R.id.detail_toolbar;
     }

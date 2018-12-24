@@ -61,4 +61,14 @@ public class CategoryPresenter implements CategoryContract.Presenter {
     public void reloadCategoryDataToView() {
         loadCategoryDataToView();
     }
+
+    @Override
+    public void goToSearchPage() {
+        mView.goToSearchPage();
+    }
+
+    @Override
+    public void goToDetailPage(int cid, String name) {
+        mView.goToDetailPage(cid, name);
+    }
 }

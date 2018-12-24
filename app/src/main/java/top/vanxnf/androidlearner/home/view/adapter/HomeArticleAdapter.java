@@ -20,7 +20,7 @@ import top.vanxnf.androidlearner.entity.Article;
 public class HomeArticleAdapter extends BaseQuickAdapter<Article.DataBean.ArticleData, BaseViewHolder> {
 
     public HomeArticleAdapter(@Nullable List<Article.DataBean.ArticleData> data) {
-        super(R.layout.item_list_article, data);
+        super(R.layout.item_list_article_card, data);
     }
 
     @Override

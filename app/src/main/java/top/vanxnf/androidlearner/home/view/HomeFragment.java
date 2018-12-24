@@ -8,6 +8,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
@@ -26,6 +27,7 @@ import top.vanxnf.androidlearner.entity.Article;
 import top.vanxnf.androidlearner.home.presenter.HomePresenter;
 import top.vanxnf.androidlearner.home.view.adapter.HomeArticleAdapter;
 import top.vanxnf.androidlearner.base.BaseMainFragment;
+import top.vanxnf.androidlearner.search.view.SearchFragment;
 import top.vanxnf.androidlearner.web.WebFragment;
 
 @SuppressWarnings("FieldCanBeLocal")
@@ -68,6 +70,13 @@ public class HomeFragment extends BaseMainFragment implements HomeContract.View 
                 TOUCH_TIME = System.currentTimeMillis();
             }
         });
+        mToolbar.setOnMenuItemClickListener((MenuItem menuItem) -> {
+            if (menuItem.getItemId() == R.id.toolbar_search) {
+                // TODO: 18-12-24 start to Search Fragment
+                start(SearchFragment.newInstance());
+            }
+            return true;
+        });
         initToolbarNav(mToolbar, true);
         mRefresh.setOnRefreshListener(() -> mPresenter.reloadArticleToView());
         mAdapter = new HomeArticleAdapter(articleLists);
@@ -75,7 +84,7 @@ public class HomeFragment extends BaseMainFragment implements HomeContract.View 
         mAdapter.setOnItemClickListener((BaseQuickAdapter adapter, View v, int position) ->
                 start(WebFragment.newInstance(articleLists.get(position).getLink(), articleLists.get(position).getTitle()))
         );
-        mAdapter.disableLoadMoreIfNotFullPage();
+        mAdapter.disableLoadMoreIfNotFullPage(mRecycler);
         mAdapter.setOnLoadMoreListener(() -> mRecycler.post(() -> mPresenter.loadMoreArticleToView()), mRecycler);
         mAdapter.setLoadMoreView(new LoadMoreFooterView());
         mRecycler.setLayoutManager(new LinearLayoutManager(mActivity));
@@ -139,4 +148,5 @@ public class HomeFragment extends BaseMainFragment implements HomeContract.View 
     protected int setTitleBar() {
         return R.id.home_toolbar;
     }
+
 }

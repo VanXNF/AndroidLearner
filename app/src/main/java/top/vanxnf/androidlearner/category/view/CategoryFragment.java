@@ -8,11 +8,10 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
-
-import com.gyf.barlibrary.ImmersionBar;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,6 +22,7 @@ import top.vanxnf.androidlearner.category.contract.CategoryContract;
 import top.vanxnf.androidlearner.entity.Category;
 import top.vanxnf.androidlearner.category.presenter.CategoryPresenter;
 import top.vanxnf.androidlearner.category.view.adapter.CategoryAdapter;
+import top.vanxnf.androidlearner.search.view.SearchFragment;
 
 @SuppressWarnings("FieldCanBeLocal")
 public class CategoryFragment extends BaseMainFragment implements CategoryContract.View {
@@ -84,6 +84,12 @@ public class CategoryFragment extends BaseMainFragment implements CategoryContra
         mToolbar = view.findViewById(R.id.category_toolbar);
         mToolbar.setTitle(R.string.category);
         initToolbarNav(mToolbar);
+        mToolbar.setOnMenuItemClickListener((MenuItem menuItem) -> {
+            if (menuItem.getItemId() == R.id.toolbar_search) {
+                mPresenter.goToSearchPage();
+            }
+            return true;
+        });
 
         mRefresh = view.findViewById(R.id.category_refresh_layout);
         mRefresh.setOnRefreshListener(() -> mPresenter.reloadCategoryDataToView());
@@ -94,9 +100,19 @@ public class CategoryFragment extends BaseMainFragment implements CategoryContra
         mAdapter.openLoadAnimation();
 
         mAdapter.addOnTagItemClickListener((int index, List<Category.DataBean.Subcategory> dataBean) ->
-            start(CategoryDetailFragment.newInstance(dataBean.get(index).getId(), dataBean.get(index).getName()))
+            mPresenter.goToDetailPage(dataBean.get(index).getId(), dataBean.get(index).getName())
         );
         mRecycler.setAdapter(mAdapter);
+    }
+
+    @Override
+    public void goToSearchPage() {
+        start(SearchFragment.newInstance());
+    }
+
+    @Override
+    public void goToDetailPage(int cid, String name) {
+        start(CategoryDetailFragment.newInstance(cid, name));
     }
 
     @Override

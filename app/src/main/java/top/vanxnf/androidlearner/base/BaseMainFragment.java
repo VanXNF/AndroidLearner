@@ -20,6 +20,7 @@ public class BaseMainFragment extends BaseFragment {
                 mOpenDrawerListener.onOpenDrawer();
             }
         });
+        toolbar.inflateMenu(R.menu.toolbar_menu);
     }
 
     @Override

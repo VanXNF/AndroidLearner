@@ -5,7 +5,6 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 
@@ -14,7 +13,7 @@ import java.util.List;
 import androidx.annotation.Nullable;
 import top.vanxnf.androidlearner.R;
 import top.vanxnf.androidlearner.glide.GlideApp;
-import top.vanxnf.androidlearner.home.model.entity.Article;
+import top.vanxnf.androidlearner.entity.Article;
 
 
 public class HomeArticleAdapter extends BaseQuickAdapter<Article.DataBean.ArticleData, BaseViewHolder> {

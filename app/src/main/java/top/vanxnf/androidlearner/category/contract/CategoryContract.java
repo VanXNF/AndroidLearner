@@ -2,7 +2,7 @@ package top.vanxnf.androidlearner.category.contract;
 
 import java.util.List;
 
-import top.vanxnf.androidlearner.category.model.entity.Category;
+import top.vanxnf.androidlearner.entity.Category;
 
 public interface CategoryContract {
     interface Model {

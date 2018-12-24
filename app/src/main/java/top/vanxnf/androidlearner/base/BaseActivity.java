@@ -18,7 +18,6 @@ import me.yokeyword.fragmentation.anim.FragmentAnimator;
 
 @SuppressLint("Registered")
 public class BaseActivity extends AppCompatActivity implements ISupportActivity{
-    protected ImmersionBar mImmersionBar;
     final SupportActivityDelegate mDelegate = new SupportActivityDelegate(this);
 
     @Override
@@ -39,8 +38,7 @@ public class BaseActivity extends AppCompatActivity implements ISupportActivity{
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mDelegate.onCreate(savedInstanceState);
-        mImmersionBar = ImmersionBar.with(this);
-        mImmersionBar.init();
+        ImmersionBar.with(this).init();
     }
 
     @Override
@@ -53,9 +51,7 @@ public class BaseActivity extends AppCompatActivity implements ISupportActivity{
     protected void onDestroy() {
         mDelegate.onDestroy();
         super.onDestroy();
-        if (mImmersionBar != null) {
-            mImmersionBar.destroy();
-        }
+        ImmersionBar.with(this).destroy();
     }
 
     /**

@@ -10,6 +10,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
+import com.gyf.barlibrary.ImmersionBar;
 
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.core.view.GravityCompat;
@@ -42,6 +43,7 @@ public class MainActivity extends BaseActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        ImmersionBar.with(this).init();
         BaseFragment fragment = findFragment(HomeFragment.class);
         if (fragment == null) {
             loadRootFragment(R.id.main_frame_container, HomeFragment.newInstance());

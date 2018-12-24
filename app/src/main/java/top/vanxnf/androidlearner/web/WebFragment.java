@@ -26,7 +26,7 @@ public class WebFragment extends BaseBackFragment {
     private String url;
     private String title;
     private AgentWeb mAgentWeb;
-    private DrawerLayout mDrawler;
+    private DrawerLayout mDrawlerLayout;
 
     public static WebFragment newInstance(String url, String title) {
         Bundle bundle = new Bundle();
@@ -46,7 +46,7 @@ public class WebFragment extends BaseBackFragment {
     @Override
     public void onSupportVisible() {
         super.onSupportVisible();
-        mImmersionBar = ImmersionBar.with(this).titleBar(R.id.toolbar);
+        mImmersionBar = ImmersionBar.with(this).titleBar(R.id.web_toolbar);
         mImmersionBar.init();
     }
 
@@ -73,7 +73,7 @@ public class WebFragment extends BaseBackFragment {
     }
 
     private void initView(View view) {
-        mToolbar = view.findViewById(R.id.toolbar);
+        mToolbar = view.findViewById(R.id.web_toolbar);
         mToolbar.setTitle(title);
         initToolbarNav(mToolbar);
         LinearLayout mLinear = view.findViewById(R.id.web_linear_layout);
@@ -83,15 +83,15 @@ public class WebFragment extends BaseBackFragment {
                 .createAgentWeb()
                 .ready()
                 .go(url);
-        mDrawler = ((MainActivity) getActivity()).getmDrawer();
-        mDrawler.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+        mDrawlerLayout = ((MainActivity) getActivity()).getmDrawer();
+        mDrawlerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        if (mDrawler != null) {
-            mDrawler.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
+        if (mDrawlerLayout != null) {
+            mDrawlerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
         }
     }
 }

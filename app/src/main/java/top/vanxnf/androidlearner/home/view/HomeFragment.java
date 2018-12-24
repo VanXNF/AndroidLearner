@@ -20,10 +20,11 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import top.vanxnf.androidlearner.R;
+import top.vanxnf.androidlearner.custom.LoadMoreFooterView;
 import top.vanxnf.androidlearner.home.contract.HomeContract;
 
 
-import top.vanxnf.androidlearner.home.model.entity.Article;
+import top.vanxnf.androidlearner.entity.Article;
 import top.vanxnf.androidlearner.home.presenter.HomePresenter;
 import top.vanxnf.androidlearner.home.view.adapter.HomeArticleAdapter;
 import top.vanxnf.androidlearner.base.BaseMainFragment;
@@ -129,6 +130,7 @@ public class HomeFragment extends BaseMainFragment implements HomeContract.View 
             start(WebFragment.newInstance(articleDataBeans.get(position).getLink(), articleDataBeans.get(position).getTitle()));
         });
         mAdapter.setOnLoadMoreListener(() -> mRecycler.post(() -> mPresenter.loadMoreArticleDataToView()), mRecycler);
+        mAdapter.setLoadMoreView(new LoadMoreFooterView());
         mRecycler.setLayoutManager(new LinearLayoutManager(mActivity));
         mRecycler.setAdapter(mAdapter);
         mRefresh.setRefreshing(true);

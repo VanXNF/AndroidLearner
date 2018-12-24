@@ -1,7 +1,7 @@
 package top.vanxnf.androidlearner.home.model;
 import java.util.ArrayList;
 import top.vanxnf.androidlearner.home.contract.HomeContract;
-import top.vanxnf.androidlearner.home.model.entity.Article;
+import top.vanxnf.androidlearner.entity.Article;
 
 import top.vanxnf.androidlearner.util.HttpUtil;
 

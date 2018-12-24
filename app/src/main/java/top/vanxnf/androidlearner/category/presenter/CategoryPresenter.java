@@ -1,6 +1,5 @@
 package top.vanxnf.androidlearner.category.presenter;
 
-import android.text.GetChars;
 import android.util.Log;
 import android.view.View;
 
@@ -14,7 +13,7 @@ import okhttp3.Response;
 import top.vanxnf.androidlearner.R;
 import top.vanxnf.androidlearner.category.contract.CategoryContract;
 import top.vanxnf.androidlearner.category.model.CategoryModel;
-import top.vanxnf.androidlearner.category.model.entity.Category;
+import top.vanxnf.androidlearner.entity.Category;
 
 public class CategoryPresenter implements CategoryContract.Presenter {
 

@@ -1,4 +1,4 @@
-package top.vanxnf.androidlearner.category.model.entity;
+package top.vanxnf.androidlearner.entity;
 
 import com.google.gson.annotations.SerializedName;
 

@@ -1,4 +1,4 @@
-package top.vanxnf.androidlearner.home.model.entity;
+package top.vanxnf.androidlearner.entity;
 
 import java.util.List;
 

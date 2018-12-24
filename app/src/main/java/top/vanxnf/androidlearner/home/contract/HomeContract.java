@@ -3,7 +3,7 @@ package top.vanxnf.androidlearner.home.contract;
 import java.util.ArrayList;
 import java.util.List;
 
-import top.vanxnf.androidlearner.home.model.entity.Article;
+import top.vanxnf.androidlearner.entity.Article;
 
 
 public interface HomeContract {

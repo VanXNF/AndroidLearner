@@ -11,7 +11,7 @@ import okhttp3.Callback;
 import okhttp3.Response;
 import top.vanxnf.androidlearner.home.contract.HomeContract;
 import top.vanxnf.androidlearner.home.model.HomeModel;
-import top.vanxnf.androidlearner.home.model.entity.Article;
+import top.vanxnf.androidlearner.entity.Article;
 
 public class HomePresenter implements HomeContract.Presenter {
 

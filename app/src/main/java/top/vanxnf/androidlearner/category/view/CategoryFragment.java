@@ -6,9 +6,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.google.android.material.chip.Chip;
-import com.google.android.material.chip.ChipGroup;
 import com.gyf.barlibrary.ImmersionBar;
 
 import java.util.ArrayList;
@@ -23,17 +20,18 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import top.vanxnf.androidlearner.R;
 import top.vanxnf.androidlearner.base.BaseMainFragment;
 import top.vanxnf.androidlearner.category.contract.CategoryContract;
-import top.vanxnf.androidlearner.category.model.entity.Category;
+import top.vanxnf.androidlearner.entity.Category;
 import top.vanxnf.androidlearner.category.presenter.CategoryPresenter;
 import top.vanxnf.androidlearner.category.view.adapter.CategoryAdapter;
 
 @SuppressWarnings("FieldCanBeLocal")
 public class CategoryFragment extends BaseMainFragment implements CategoryContract.View {
 
+    private static final String TAG = "CategoryFragment";
+
     private Toolbar mToolbar;
     private SwipeRefreshLayout mRefresh;
     private RecyclerView mRecycler;
-    private ChipGroup chipGroup;
     private CategoryAdapter mAdapter;
     private CategoryContract.Presenter mPresenter;
     private List<Category.DataBean> categories = new ArrayList<>();
@@ -45,7 +43,8 @@ public class CategoryFragment extends BaseMainFragment implements CategoryContra
     @Override
     public void onSupportVisible() {
         super.onSupportVisible();
-        mImmersionBar = ImmersionBar.with(this).titleBar(R.id.toolbar);
+        // TODO: 18-12-24 Immersionbar  在Fragment里使用时，请先在加载Fragment的Activity里初始化！！！
+        mImmersionBar = ImmersionBar.with(this).titleBar(R.id.category_toolbar);
         mImmersionBar.init();
     }
 
@@ -76,8 +75,7 @@ public class CategoryFragment extends BaseMainFragment implements CategoryContra
 
     @Override
     public void showCategoryList(List<Category.DataBean> dataBeans) {
-        categories.clear();
-        categories.addAll(dataBeans);
+        categories = dataBeans;
         post(() -> {
             mAdapter.setNewData(categories);
             mAdapter.notifyDataSetChanged();
@@ -91,7 +89,7 @@ public class CategoryFragment extends BaseMainFragment implements CategoryContra
 
     @Override
     public void initView(View view) {
-        mToolbar = view.findViewById(R.id.toolbar);
+        mToolbar = view.findViewById(R.id.category_toolbar);
         mToolbar.setTitle(R.string.category);
         initToolbarNav(mToolbar);
 
@@ -102,17 +100,12 @@ public class CategoryFragment extends BaseMainFragment implements CategoryContra
         mRecycler.setLayoutManager(new LinearLayoutManager(mActivity));
         mAdapter = new CategoryAdapter(categories);
         mAdapter.openLoadAnimation();
-        mAdapter.loadMoreEnd(false);
-        mAdapter.setOnItemChildClickListener((BaseQuickAdapter adapter, View v, int position) -> {
-            showToast(String.valueOf(v.getId()));
-            // TODO: 18-12-23 启动新界面 分类详情界面 
-//            start();
-        });
+
+        mAdapter.addOnTagItemClickListener((int index, List<Category.DataBean.Subcategory> dataBean) ->
+            start(CategoryDetailFragment.newInstance(dataBean.get(index).getId(), dataBean.get(index).getName()))
+        );
         mRecycler.setAdapter(mAdapter);
 
-        chipGroup = view.findViewById(R.id.category_chip_group);
-//        chipGroup.setOnCheckedChangeListener((ChipGroup chipGroup, int i) -> {
-//            showToast(String.valueOf(chipGroup.getCheckedChipId()) + " i = " + String.valueOf(i));
-//        });
+
     }
 }

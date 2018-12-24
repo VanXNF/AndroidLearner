@@ -5,7 +5,7 @@ import java.util.List;
 
 import okhttp3.Callback;
 import top.vanxnf.androidlearner.category.contract.CategoryContract;
-import top.vanxnf.androidlearner.category.model.entity.Category;
+import top.vanxnf.androidlearner.entity.Category;
 import top.vanxnf.androidlearner.util.HttpUtil;
 
 public class CategoryModel implements CategoryContract.Model {

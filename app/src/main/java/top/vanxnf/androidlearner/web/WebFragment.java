@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
@@ -66,6 +67,18 @@ public class WebFragment extends BaseBackFragment {
         mToolbar = view.findViewById(R.id.web_toolbar);
         mToolbar.setTitle(title);
         initToolbarNav(mToolbar);
+        mToolbar.setNavigationOnClickListener((v) -> {
+            if (!mAgentWeb.back()) {
+                pop();
+            }
+        });
+        mToolbar.inflateMenu(R.menu.toolbar_web_menu);
+        mToolbar.setOnMenuItemClickListener((MenuItem item) -> {
+            if (item.getItemId() == R.id.toolbar_refresh) {
+                mAgentWeb.getUrlLoader().reload();
+            }
+            return true;
+        });
         LinearLayout mLinear = view.findViewById(R.id.web_linear_layout);
         mAgentWeb = AgentWeb.with(mActivity)
                 .setAgentWebParent(mLinear, new LinearLayout.LayoutParams(-1, -1))
@@ -76,9 +89,20 @@ public class WebFragment extends BaseBackFragment {
     }
 
     @Override
+    public boolean onBackPressedSupport() {
+        return mAgentWeb.back();
+    }
+
+    @Override
     public void onSupportVisible() {
         super.onSupportVisible();
         ((MainActivity) getActivity()).setDrawerState(true);
+    }
+
+    @Override
+    public void onDestroyView() {
+        mAgentWeb.getWebLifeCycle().onDestroy();
+        super.onDestroyView();
     }
 
     @Override

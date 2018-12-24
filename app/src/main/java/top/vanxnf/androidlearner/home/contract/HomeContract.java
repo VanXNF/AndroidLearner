@@ -1,6 +1,5 @@
 package top.vanxnf.androidlearner.home.contract;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import top.vanxnf.androidlearner.entity.Article;
@@ -9,23 +8,31 @@ import top.vanxnf.androidlearner.entity.Article;
 public interface HomeContract {
     interface Model {
         int getCurrentPage();
-        ArrayList<Article> getArticleList();
+        int getAllPages();
+        void setAllPages(int allPages);
+        void setArticleList(List<Article> articles);
+        List<Article> getArticleList();
         void getArticleData(okhttp3.Callback callback);
         void getArticleData(int page, okhttp3.Callback callback);
         void getMoreArticleData(okhttp3.Callback callback);
-        void refreshArticleData(okhttp3.Callback callback);
     }
 
     interface View {
-
-        void displayArticle(List<Article.DataBean.ArticleData> dtaBeans);
-        void displayMoreArticle(List<Article.DataBean.ArticleData> dataBeans);
-        void refreshArticleList(List<Article.DataBean.ArticleData> dataBeans);
+        void initView(android.view.View view);
+        void showLoading();
+        void showLoadingMore();
+        void showArticle(List<Article.DataBean.ArticleData> articles);
+        void showMoreArticle(List<Article.DataBean.ArticleData> articles);
+        void hideLoading();
+        void hideLoadingMore(boolean isCompeted, boolean isEnd);
+        void showToast(Integer resId);
+        void showToast(CharSequence text);
     }
 
     interface Presenter {
-        void loadArticleDataToView();
-        void loadMoreArticleDataToView();
-        void refreshArticleDataToView();
+        void initRootView(android.view.View view);
+        void loadArticleToView();
+        void loadMoreArticleToView();
+        void reloadArticleToView();
     }
 }

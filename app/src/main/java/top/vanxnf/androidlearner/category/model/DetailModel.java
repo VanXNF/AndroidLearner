@@ -66,8 +66,7 @@ public class DetailModel implements DetailContract.Model {
 
     @Override
     public void getMoreArticleData(Callback callback) {
-        int nextPage = currentPage + 1;
-        getArticleData(nextPage, callback);
+        getArticleData(currentPage + 1, callback);
     }
 
 }

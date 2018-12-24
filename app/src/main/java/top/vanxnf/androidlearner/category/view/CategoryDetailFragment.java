@@ -13,11 +13,11 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.gyf.barlibrary.ImmersionBar;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import top.vanxnf.androidlearner.MainActivity;
 import top.vanxnf.androidlearner.R;
 import top.vanxnf.androidlearner.base.BaseBackFragment;
 import top.vanxnf.androidlearner.category.contract.DetailContract;
@@ -27,7 +27,7 @@ import top.vanxnf.androidlearner.custom.LoadMoreFooterView;
 import top.vanxnf.androidlearner.entity.Article;
 import top.vanxnf.androidlearner.web.WebFragment;
 
-@SuppressWarnings({"FieldCanBeLocal", "WeakerAccess"})
+@SuppressWarnings({"FieldCanBeLocal", "WeakerAccess", "ConstantConditions"})
 public class CategoryDetailFragment extends BaseBackFragment implements DetailContract.View {
 
     private static final String CID = "cid";
@@ -91,6 +91,7 @@ public class CategoryDetailFragment extends BaseBackFragment implements DetailCo
             start(WebFragment.newInstance(articles.get(position).getLink(), articles.get(position).getTitle()))
         );
         mRecycler.setAdapter(mAdapter);
+        ((MainActivity) getActivity()).setDrawerState(true);
     }
 
     @Override
@@ -145,6 +146,12 @@ public class CategoryDetailFragment extends BaseBackFragment implements DetailCo
     @Override
     public void showToast(CharSequence text) {
         post(() -> Toast.makeText(mActivity, text, Toast.LENGTH_SHORT).show());
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        ((MainActivity) getActivity()).setDrawerState(false);
     }
 
     @Override

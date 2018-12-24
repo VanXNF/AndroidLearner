@@ -3,7 +3,6 @@ package top.vanxnf.androidlearner.web;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +14,7 @@ import top.vanxnf.androidlearner.MainActivity;
 import top.vanxnf.androidlearner.R;
 import top.vanxnf.androidlearner.base.BaseBackFragment;
 
+@SuppressWarnings({"FieldCanBeLocal", "ConstantConditions"})
 public class WebFragment extends BaseBackFragment {
 
     private static final String LOAD_URL = "URL";
@@ -23,7 +23,6 @@ public class WebFragment extends BaseBackFragment {
     private String url;
     private String title;
     private AgentWeb mAgentWeb;
-    private DrawerLayout mDrawerLayout;
 
     public static WebFragment newInstance(String url, String title) {
         Bundle bundle = new Bundle();
@@ -62,6 +61,7 @@ public class WebFragment extends BaseBackFragment {
         return view;
     }
 
+
     private void initView(View view) {
         mToolbar = view.findViewById(R.id.web_toolbar);
         mToolbar.setTitle(title);
@@ -73,16 +73,26 @@ public class WebFragment extends BaseBackFragment {
                 .createAgentWeb()
                 .ready()
                 .go(url);
-        mDrawerLayout = ((MainActivity) getActivity()).getmDrawer();
-        mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+        ((MainActivity) getActivity()).setDrawerState(true);
+
+    }
+
+    @Override
+    public void onSupportVisible() {
+        super.onSupportVisible();
+        ((MainActivity) getActivity()).setDrawerState(true);
+    }
+
+    @Override
+    public void onSupportInvisible() {
+        super.onSupportInvisible();
+        ((MainActivity) getActivity()).setDrawerState(false);
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        if (mDrawerLayout != null) {
-            mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
-        }
+        ((MainActivity) getActivity()).setDrawerState(false);
     }
 
     @Override

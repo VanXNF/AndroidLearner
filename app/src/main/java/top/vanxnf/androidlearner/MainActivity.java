@@ -163,7 +163,11 @@ public class MainActivity extends BaseActivity
         return true;
     }
 
-    public DrawerLayout getmDrawer() {
-        return mDrawer;
+    public void setDrawerState(boolean isLocked) {
+        if (isLocked) {
+            mDrawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+        } else {
+            mDrawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
+        }
     }
 }

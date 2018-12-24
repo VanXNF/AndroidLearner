@@ -1,12 +1,11 @@
 package top.vanxnf.androidlearner.glide;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 
 import com.bumptech.glide.GlideBuilder;
 import com.bumptech.glide.annotation.GlideModule;
 import com.bumptech.glide.module.AppGlideModule;
-
-import androidx.annotation.NonNull;
 
 @GlideModule
 public final class GlideAppModule extends AppGlideModule {

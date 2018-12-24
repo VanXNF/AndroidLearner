@@ -1,5 +1,6 @@
 package top.vanxnf.androidlearner.home.view.adapter;
 
+import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
@@ -10,7 +11,7 @@ import com.chad.library.adapter.base.BaseViewHolder;
 
 import java.util.List;
 
-import androidx.annotation.Nullable;
+
 import top.vanxnf.androidlearner.R;
 import top.vanxnf.androidlearner.glide.GlideApp;
 import top.vanxnf.androidlearner.entity.Article;

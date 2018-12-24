@@ -1,6 +1,12 @@
 package top.vanxnf.androidlearner.home.view;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,12 +19,6 @@ import com.gyf.barlibrary.ImmersionBar;
 import java.util.ArrayList;
 import java.util.List;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.widget.Toolbar;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import top.vanxnf.androidlearner.R;
 import top.vanxnf.androidlearner.custom.LoadMoreFooterView;
 import top.vanxnf.androidlearner.home.contract.HomeContract;
@@ -30,6 +30,7 @@ import top.vanxnf.androidlearner.home.view.adapter.HomeArticleAdapter;
 import top.vanxnf.androidlearner.base.BaseMainFragment;
 import top.vanxnf.androidlearner.web.WebFragment;
 
+@SuppressWarnings("FieldCanBeLocal")
 public class HomeFragment extends BaseMainFragment implements HomeContract.View {
 
     private static final String TAG = "HomeFragment";
@@ -44,13 +45,6 @@ public class HomeFragment extends BaseMainFragment implements HomeContract.View 
 
     public static HomeFragment newInstance() {
         return new HomeFragment();
-    }
-
-    @Override
-    public void onSupportVisible() {
-        super.onSupportVisible();
-        mImmersionBar = ImmersionBar.with(this).titleBar(R.id.home_toolbar);
-        mImmersionBar.init();
     }
 
     @Nullable
@@ -126,9 +120,9 @@ public class HomeFragment extends BaseMainFragment implements HomeContract.View 
         articleDataBeans = new ArrayList<>();
         mAdapter = new HomeArticleAdapter(articleDataBeans);
         mAdapter.openLoadAnimation(BaseQuickAdapter.SLIDEIN_LEFT);
-        mAdapter.setOnItemClickListener((BaseQuickAdapter adapter, View v, int position) -> {
-            start(WebFragment.newInstance(articleDataBeans.get(position).getLink(), articleDataBeans.get(position).getTitle()));
-        });
+        mAdapter.setOnItemClickListener((BaseQuickAdapter adapter, View v, int position) ->
+            start(WebFragment.newInstance(articleDataBeans.get(position).getLink(), articleDataBeans.get(position).getTitle()))
+        );
         mAdapter.setOnLoadMoreListener(() -> mRecycler.post(() -> mPresenter.loadMoreArticleDataToView()), mRecycler);
         mAdapter.setLoadMoreView(new LoadMoreFooterView());
         mRecycler.setLayoutManager(new LinearLayoutManager(mActivity));
@@ -138,5 +132,10 @@ public class HomeFragment extends BaseMainFragment implements HomeContract.View 
 
     private void doToast(CharSequence text) {
         Toast.makeText(mActivity, text, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    protected int setTitleBar() {
+        return R.id.home_toolbar;
     }
 }

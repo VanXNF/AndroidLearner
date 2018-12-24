@@ -4,14 +4,16 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.view.View;
 import android.view.animation.Animation;
 
 import com.gyf.barlibrary.ImmersionBar;
 
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentActivity;
+
 import me.yokeyword.fragmentation.ExtraTransaction;
 import me.yokeyword.fragmentation.ISupportFragment;
 import me.yokeyword.fragmentation.SupportFragmentDelegate;
@@ -26,7 +28,6 @@ public class BaseFragment extends Fragment implements ISupportFragment {
 
     private final SupportFragmentDelegate mDelegate = new SupportFragmentDelegate(this);
     protected FragmentActivity mActivity;
-    protected ImmersionBar mImmersionBar;
 
     @Override
     public SupportFragmentDelegate getSupportDelegate() {
@@ -54,6 +55,19 @@ public class BaseFragment extends Fragment implements ISupportFragment {
         super.onCreate(savedInstanceState);
         mDelegate.onCreate(savedInstanceState);
     }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        if (isImmersionBarEnabled()) {
+            if (setTitleBar() != 0) {
+                View titleBar = view.findViewById(setTitleBar());
+                ImmersionBar.setTitleBar(mActivity, titleBar);
+            }
+        }
+    }
+
+
 
     @Override
     public Animation onCreateAnimation(int transit, boolean enter, int nextAnim) {
@@ -94,9 +108,7 @@ public class BaseFragment extends Fragment implements ISupportFragment {
     public void onDestroy() {
         mDelegate.onDestroy();
         super.onDestroy();
-        if (mImmersionBar != null) {
-            mImmersionBar.destroy();
-        }
+        ImmersionBar.with(mActivity).destroy();
     }
 
     @Override
@@ -167,6 +179,9 @@ public class BaseFragment extends Fragment implements ISupportFragment {
     @Override
     public void onSupportVisible() {
         mDelegate.onSupportVisible();
+        if (isImmersionBarEnabled()) {
+            initImmersionBar();
+        }
     }
 
     /**
@@ -364,5 +379,17 @@ public class BaseFragment extends Fragment implements ISupportFragment {
      */
     public <T extends ISupportFragment> T findChildFragment(Class<T> fragmentClass) {
         return SupportHelper.findFragment(getChildFragmentManager(), fragmentClass);
+    }
+
+    public void initImmersionBar() {
+        ImmersionBar.with(mActivity).init();
+    }
+
+    protected boolean isImmersionBarEnabled() {
+        return true;
+    }
+
+    protected int setTitleBar() {
+        return 0;
     }
 }

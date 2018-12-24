@@ -1,19 +1,16 @@
 package top.vanxnf.androidlearner.web;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
-
-
-import com.gyf.barlibrary.ImmersionBar;
 import com.just.agentweb.AgentWeb;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.widget.Toolbar;
-import androidx.drawerlayout.widget.DrawerLayout;
 import top.vanxnf.androidlearner.MainActivity;
 import top.vanxnf.androidlearner.R;
 import top.vanxnf.androidlearner.base.BaseBackFragment;
@@ -26,7 +23,7 @@ public class WebFragment extends BaseBackFragment {
     private String url;
     private String title;
     private AgentWeb mAgentWeb;
-    private DrawerLayout mDrawlerLayout;
+    private DrawerLayout mDrawerLayout;
 
     public static WebFragment newInstance(String url, String title) {
         Bundle bundle = new Bundle();
@@ -41,13 +38,6 @@ public class WebFragment extends BaseBackFragment {
     public void onPause() {
         mAgentWeb.getWebLifeCycle().onPause();
         super.onPause();
-    }
-
-    @Override
-    public void onSupportVisible() {
-        super.onSupportVisible();
-        mImmersionBar = ImmersionBar.with(this).titleBar(R.id.web_toolbar);
-        mImmersionBar.init();
     }
 
 
@@ -77,21 +67,26 @@ public class WebFragment extends BaseBackFragment {
         mToolbar.setTitle(title);
         initToolbarNav(mToolbar);
         LinearLayout mLinear = view.findViewById(R.id.web_linear_layout);
-        mAgentWeb = AgentWeb.with(this)
+        mAgentWeb = AgentWeb.with(mActivity)
                 .setAgentWebParent(mLinear, new LinearLayout.LayoutParams(-1, -1))
                 .useDefaultIndicator()
                 .createAgentWeb()
                 .ready()
                 .go(url);
-        mDrawlerLayout = ((MainActivity) getActivity()).getmDrawer();
-        mDrawlerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+        mDrawerLayout = ((MainActivity) getActivity()).getmDrawer();
+        mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        if (mDrawlerLayout != null) {
-            mDrawlerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
+        if (mDrawerLayout != null) {
+            mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
         }
+    }
+
+    @Override
+    protected int setTitleBar() {
+        return R.id.web_toolbar;
     }
 }

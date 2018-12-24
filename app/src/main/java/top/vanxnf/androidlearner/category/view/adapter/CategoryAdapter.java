@@ -1,19 +1,20 @@
 package top.vanxnf.androidlearner.category.view.adapter;
 
+import android.support.annotation.Nullable;
+import android.support.design.chip.Chip;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
-import com.google.android.material.chip.Chip;
+
 import com.zhy.view.flowlayout.FlowLayout;
 import com.zhy.view.flowlayout.TagAdapter;
 import com.zhy.view.flowlayout.TagFlowLayout;
 
 import java.util.List;
 
-import androidx.annotation.Nullable;
 import top.vanxnf.androidlearner.R;
 import top.vanxnf.androidlearner.category.contract.OnTagItemClickListener;
 import top.vanxnf.androidlearner.entity.Category;

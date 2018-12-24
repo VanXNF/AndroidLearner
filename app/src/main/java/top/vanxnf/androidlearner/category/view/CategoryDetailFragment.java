@@ -1,6 +1,12 @@
 package top.vanxnf.androidlearner.category.view;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,12 +18,6 @@ import com.gyf.barlibrary.ImmersionBar;
 import java.util.ArrayList;
 import java.util.List;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.widget.Toolbar;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import top.vanxnf.androidlearner.R;
 import top.vanxnf.androidlearner.base.BaseBackFragment;
 import top.vanxnf.androidlearner.category.contract.DetailContract;
@@ -48,13 +48,6 @@ public class CategoryDetailFragment extends BaseBackFragment implements DetailCo
         CategoryDetailFragment fragment = new CategoryDetailFragment();
         fragment.setArguments(bundle);
         return fragment;
-    }
-
-    @Override
-    public void onSupportVisible() {
-        super.onSupportVisible();
-        mImmersionBar = ImmersionBar.with(mActivity).titleBar(R.id.detail_toolbar);
-        mImmersionBar.init();
     }
 
     @Override
@@ -152,5 +145,10 @@ public class CategoryDetailFragment extends BaseBackFragment implements DetailCo
     @Override
     public void showToast(CharSequence text) {
         post(() -> Toast.makeText(mActivity, text, Toast.LENGTH_SHORT).show());
+    }
+
+    @Override
+    protected int setTitleBar() {
+        return R.id.detail_toolbar;
     }
 }

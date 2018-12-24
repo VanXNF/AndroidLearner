@@ -13,7 +13,7 @@
         <item name="android:textColor">@color/white</item>
     </style>
 
-    <style name="Chip_TextAppearance" parent="TextAppearance.MaterialComponents.Chip">
+    <style name="Chip_TextAppearance">
         <item name="android:textSize">@dimen/sp_12</item>
         <item name="android:textStyle">normal</item>
         <item name="android:textColor">@color/darkGray</item>

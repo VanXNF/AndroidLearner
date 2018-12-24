@@ -1,11 +1,12 @@
 package top.vanxnf.androidlearner.category.view.adapter;
 
+import android.support.annotation.Nullable;
+
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 
 import java.util.List;
 
-import androidx.annotation.Nullable;
 import top.vanxnf.androidlearner.R;
 import top.vanxnf.androidlearner.entity.Article;
 

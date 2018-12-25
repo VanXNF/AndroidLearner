@@ -83,6 +83,7 @@ public class WebFragment extends BaseBackFragment {
         mAgentWeb = AgentWeb.with(mActivity)
                 .setAgentWebParent(mLinear, new LinearLayout.LayoutParams(-1, -1))
                 .useDefaultIndicator()
+                .setSecurityType(AgentWeb.SecurityType.STRICT_CHECK)
                 .createAgentWeb()
                 .ready()
                 .go(url);
@@ -94,9 +95,15 @@ public class WebFragment extends BaseBackFragment {
     }
 
     @Override
+    public void onResume() {
+        mAgentWeb.getWebLifeCycle().onResume();
+        super.onResume();
+    }
+
+    @Override
     public void onSupportVisible() {
-        super.onSupportVisible();
         ((MainActivity) getActivity()).setDrawerState(true);
+        super.onSupportVisible();
     }
 
     @Override

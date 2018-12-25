@@ -39,6 +39,7 @@ public class CategoryDetailFragment extends BaseBackFragment implements DetailCo
     private RecyclerView mRecycler;
     private SwipeRefreshLayout mRefresh;
     private DetailAdapter mAdapter;
+    private View mEmptyView;
     private List<Article.DataBean.ArticleData> articles = new ArrayList<>();
 
     public static CategoryDetailFragment newInstance(int cid, String title) {
@@ -74,7 +75,14 @@ public class CategoryDetailFragment extends BaseBackFragment implements DetailCo
     }
 
     @Override
+    public void onSupportVisible() {
+        super.onSupportVisible();
+        ((MainActivity) getActivity()).setDrawerState(true);
+    }
+
+    @Override
     public void initView(View view) {
+        mEmptyView = view.findViewById(R.id.detail_empty_view);
         mToolbar = view.findViewById(R.id.detail_toolbar);
         mToolbar.setTitle(title);
         initToolbarNav(mToolbar);
@@ -91,7 +99,6 @@ public class CategoryDetailFragment extends BaseBackFragment implements DetailCo
             start(WebFragment.newInstance(articles.get(position).getLink(), articles.get(position).getTitle()))
         );
         mRecycler.setAdapter(mAdapter);
-        ((MainActivity) getActivity()).setDrawerState(true);
     }
 
     @Override
@@ -134,6 +141,22 @@ public class CategoryDetailFragment extends BaseBackFragment implements DetailCo
                     mAdapter.loadMoreFail();
                 }
             }
+        });
+    }
+
+    @Override
+    public void showFailPage() {
+        post(() -> {
+            mEmptyView.setVisibility(View.VISIBLE);
+            mRecycler.setVisibility(View.GONE);
+        });
+    }
+
+    @Override
+    public void hideFailPage() {
+        post(() -> {
+            mEmptyView.setVisibility(View.GONE);
+            mRecycler.setVisibility(View.VISIBLE);
         });
     }
 

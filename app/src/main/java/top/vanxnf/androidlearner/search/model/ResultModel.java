@@ -1,7 +1,7 @@
 package top.vanxnf.androidlearner.search.model;
 
-import android.util.Log;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -19,7 +19,7 @@ public class ResultModel implements ResultContract.Model {
     private int currentPage = 0;
     private int allPages = 0;
     private String keyword = "";
-    private List<Article> articles;
+    private List<Article> articles = new ArrayList<>();
 
     @Override
     public void setKeyword(String keyword) {
@@ -44,7 +44,7 @@ public class ResultModel implements ResultContract.Model {
     @Override
     public int getAllPages() {
         try {
-            return articles.get(currentPage).getData().getPageCount();
+            return articles.get(currentPage).getData().getTotal();
         } catch (IndexOutOfBoundsException e) {
             return allPages;
         }

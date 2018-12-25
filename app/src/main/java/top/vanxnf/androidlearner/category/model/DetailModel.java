@@ -30,7 +30,7 @@ public class DetailModel implements DetailContract.Model {
     @Override
     public int getAllPages() {
         try {
-            return articles.get(currentPage).getData().getPageCount();
+            return articles.get(currentPage).getData().getTotal();
         } catch (IndexOutOfBoundsException e) {
             return allPages;
         }
@@ -54,7 +54,6 @@ public class DetailModel implements DetailContract.Model {
 
     @Override
     public void getArticleData(Callback callback) {
-        articles.clear();
         getArticleData(0, callback);
     }
 

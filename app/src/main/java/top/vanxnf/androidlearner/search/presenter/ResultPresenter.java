@@ -41,7 +41,9 @@ public class ResultPresenter implements ResultContract.Presenter {
             @Override
             public void onFailure(Call call, IOException e) {
                 mView.hideLoading();
-                mView.showFailPage();
+                if (mModel.getArticleList().size() == 0) {
+                    mView.showFailPage();
+                }
                 mView.showToast(R.string.network_error_please_try_again);
                 Log.d(TAG, "onFailure: loadArticleToView");
             }
@@ -50,15 +52,17 @@ public class ResultPresenter implements ResultContract.Presenter {
             public void onResponse(Call call, Response response) throws IOException {
                 mView.hideLoading();
                 Article article = new Gson().fromJson(response.body().string(), Article.class);
-                if (article != null) {
+                if (article != null && article.getData().getTotal() != 0 && article.getErrorCode() == 0) {
                     List<Article> articles = new ArrayList<>();
                     articles.add(article);
                     mModel.setArticleList(articles);
-                    mModel.setAllPages(article.getData().getPageCount());
+                    mModel.setAllPages(article.getData().getTotal());
                     mView.hideFailPage();
                     mView.showArticle(article.getData().getDatas());
                 } else {
-                    mView.showFailPage();
+                    if (mModel.getArticleList().size() == 0) {
+                        mView.showFailPage();
+                    }
                     mView.showToast(R.string.data_error_please_try_again);
                 }
                 Log.d(TAG, "onResponse: loadArticleToView");
@@ -81,7 +85,7 @@ public class ResultPresenter implements ResultContract.Presenter {
                 @Override
                 public void onResponse(Call call, Response response) throws IOException {
                     Article article = new Gson().fromJson(response.body().string(), Article.class);
-                    if (article != null) {
+                    if (article != null && article.getErrorCode() == 0) {
                         List<Article> articles = mModel.getArticleList();
                         articles.add(article);
                         mModel.setArticleList(articles);

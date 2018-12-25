@@ -7,6 +7,8 @@ import top.vanxnf.androidlearner.entity.HotKey;
 
 public interface SearchContract {
     interface Model {
+        void setKeyList(List<HotKey.Key> keyList);
+        List<HotKey.Key> getKeyList();
         void getHotKeyData(okhttp3.Callback callback);
     }
 

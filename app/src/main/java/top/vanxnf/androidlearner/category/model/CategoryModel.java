@@ -11,8 +11,13 @@ import top.vanxnf.androidlearner.util.HttpUtil;
 public class CategoryModel implements CategoryContract.Model {
 
     @SuppressWarnings("FieldCanBeLocal")
-    private final String API = "http://www.wanandroid.com/tree/json";
+    private static final String API = "http://www.wanandroid.com/tree/json";
     private List<Category> categories = new ArrayList<>();
+
+    @Override
+    public void setCategoryList(List<Category> categories) {
+        this.categories = categories;
+    }
 
     @Override
     public List<Category> getCategoryList() {
@@ -21,12 +26,6 @@ public class CategoryModel implements CategoryContract.Model {
 
     @Override
     public void getCategoryData(Callback callback) {
-        categories.clear();
         HttpUtil.sendOkHttpRequest(API, callback);
-    }
-
-    @Override
-    public void refreshCategoryData(Callback callback) {
-        getCategoryData(callback);
     }
 }

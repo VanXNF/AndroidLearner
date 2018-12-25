@@ -24,7 +24,7 @@ public class HomeModel implements HomeContract.Model {
     @Override
     public int getAllPages() {
         try {
-            return articles.get(currentPage).getData().getPageCount();
+            return articles.get(currentPage).getData().getTotal();
         } catch (IndexOutOfBoundsException e) {
             return allPages;
         }
@@ -47,7 +47,6 @@ public class HomeModel implements HomeContract.Model {
 
     @Override
     public void getArticleData(okhttp3.Callback callback) {
-        articles.clear();
         getArticleData(0, callback);
     }
 

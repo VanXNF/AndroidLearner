@@ -6,6 +6,8 @@ import android.view.View;
 import com.google.gson.Gson;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -38,17 +40,26 @@ public class CategoryPresenter implements CategoryContract.Presenter {
             @Override
             public void onFailure(Call call, IOException e) {
                 mView.hideLoading();
+                if (mModel.getCategoryList().size() == 0) {
+                    mView.showFailPage();
+                }
                 mView.showToast(R.string.network_error_please_try_again);
                 Log.d(TAG, "onFailure: loadCategoryDataToView");
             }
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
-//                mModel.getCategoryList().add(new Gson().fromJson(response.body().string(), Category.class));
                 Category category = new Gson().fromJson(response.body().string(), Category.class);
-                if (category.getData() != null) {
+                if (category.getData() != null && category.getErrorCode() == 0) {
+                    List<Category> categories = new ArrayList<>();
+                    categories.add(category);
+                    mModel.setCategoryList(categories);
+                    mView.hideFailPage();
                     mView.showCategoryList(category.getData());
                 } else {
+                    if (mModel.getCategoryList().size() == 0) {
+                        mView.showFailPage();
+                    }
                     mView.showToast(R.string.data_error_please_try_again);
                 }
                 mView.hideLoading();

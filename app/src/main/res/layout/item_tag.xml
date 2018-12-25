@@ -6,7 +6,7 @@
     android:layout_margin="@dimen/dp_5"
     android:clickable="true"
     android:focusable="true"
-    android:gravity="center"
+    android:gravity="center_vertical"
     android:textColor="@color/darkGray"
     android:textAppearance="@style/Chip_TextAppearance"
     app:chipEndPadding="@dimen/dp_5"

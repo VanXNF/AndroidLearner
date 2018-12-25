@@ -13,6 +13,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.chad.library.adapter.base.BaseQuickAdapter;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,6 +37,7 @@ public class CategoryFragment extends BaseMainFragment implements CategoryContra
     private RecyclerView mRecycler;
     private CategoryAdapter mAdapter;
     private CategoryContract.Presenter mPresenter;
+    private View mEmptyView;
     private List<Category.DataBean> categories = new ArrayList<>();
 
     public static CategoryFragment newInstance() {
@@ -88,6 +91,7 @@ public class CategoryFragment extends BaseMainFragment implements CategoryContra
 
     @Override
     public void initView(View view) {
+        mEmptyView = view.findViewById(R.id.category_empty_view);
         mToolbar = view.findViewById(R.id.category_toolbar);
         mToolbar.setTitle(R.string.category);
         initToolbarNav(mToolbar);
@@ -97,19 +101,35 @@ public class CategoryFragment extends BaseMainFragment implements CategoryContra
             }
             return true;
         });
-
         mRefresh = view.findViewById(R.id.category_refresh_layout);
         mRefresh.setOnRefreshListener(() -> mPresenter.reloadCategoryDataToView());
-
         mRecycler = view.findViewById(R.id.category_recycler_view);
         mRecycler.setLayoutManager(new LinearLayoutManager(mActivity));
         mAdapter = new CategoryAdapter(categories);
         mAdapter.openLoadAnimation();
-
+        mAdapter.setOnItemChildClickListener((BaseQuickAdapter adapter, View v, int position) -> {
+            mPresenter.goToDetailPage(categories.get(position).getId(), categories.get(position).getName());
+        });
         mAdapter.addOnTagItemClickListener((int index, List<Category.DataBean.Subcategory> dataBean) ->
             mPresenter.goToDetailPage(dataBean.get(index).getId(), dataBean.get(index).getName())
         );
         mRecycler.setAdapter(mAdapter);
+    }
+
+    @Override
+    public void showFailPage() {
+        post(() -> {
+            mEmptyView.setVisibility(View.VISIBLE);
+            mRecycler.setVisibility(View.GONE);
+        });
+    }
+
+    @Override
+    public void hideFailPage() {
+        post(() -> {
+            mEmptyView.setVisibility(View.GONE);
+            mRecycler.setVisibility(View.VISIBLE);
+        });
     }
 
     @Override

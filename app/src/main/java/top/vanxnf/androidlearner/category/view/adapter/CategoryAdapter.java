@@ -32,6 +32,7 @@ public class CategoryAdapter extends BaseQuickAdapter<Category.DataBean, BaseVie
     @Override
     protected void convert(BaseViewHolder helper, Category.DataBean item) {
         helper.setText(R.id.category_name_text, item.getName());
+        helper.addOnClickListener(R.id.category_name_text);
         TagFlowLayout tagFlowLayout = helper.getView(R.id.category_tag_flow_layout);
         tagFlowLayout.setAdapter(new TagAdapter<Category.DataBean.Subcategory>(item.getSubcategories()) {
 

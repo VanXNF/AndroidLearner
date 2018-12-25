@@ -1,6 +1,7 @@
 package top.vanxnf.androidlearner.home.view.adapter;
 
 import android.support.annotation.Nullable;
+import android.text.Html;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
@@ -28,7 +29,8 @@ public class HomeArticleAdapter extends BaseQuickAdapter<Article.DataBean.Articl
         helper.setText(R.id.article_author_text, item.getAuthor())
                 .setText(R.id.article_time_text, item.getNiceDate())
                 .setText(R.id.article_category_text, item.getSuperChapterName() + "/" + item.getChapterName())
-                .setText(R.id.article_title_text, item.getTitle());
+                .setText(R.id.article_title_text, Html.fromHtml(item.getTitle()));
+
 
         TextView descText = helper.getView(R.id.article_desc_text);
         ImageView projectImage = helper.getView(R.id.article_project_image);

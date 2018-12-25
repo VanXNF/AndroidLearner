@@ -42,6 +42,7 @@ public class HomeFragment extends BaseMainFragment implements HomeContract.View 
     private SwipeRefreshLayout mRefresh;
     private List<Article.DataBean.ArticleData> articleLists = new ArrayList<>();
     private RecyclerView mRecycler;
+    private View mEmptyView;
     private HomeArticleAdapter mAdapter;
 
     public static HomeFragment newInstance() {
@@ -66,6 +67,7 @@ public class HomeFragment extends BaseMainFragment implements HomeContract.View 
 
     @Override
     public void initView(View view) {
+        mEmptyView = view.findViewById(R.id.home_empty_view);
         mRefresh = view.findViewById(R.id.home_refresh_layout);
         mRecycler = view.findViewById(R.id.home_recycler_view);
         mToolbar = view.findViewById(R.id.home_toolbar);
@@ -79,7 +81,7 @@ public class HomeFragment extends BaseMainFragment implements HomeContract.View 
         });
         mToolbar.setOnMenuItemClickListener((MenuItem menuItem) -> {
             if (menuItem.getItemId() == R.id.toolbar_search) {
-                start(SearchFragment.newInstance());
+                mPresenter.goToSearchPage();
             }
             return true;
         });
@@ -88,7 +90,7 @@ public class HomeFragment extends BaseMainFragment implements HomeContract.View 
         mAdapter = new HomeArticleAdapter(articleLists);
         mAdapter.openLoadAnimation(BaseQuickAdapter.SLIDEIN_LEFT);
         mAdapter.setOnItemClickListener((BaseQuickAdapter adapter, View v, int position) ->
-                start(WebFragment.newInstance(articleLists.get(position).getLink(), articleLists.get(position).getTitle()))
+                mPresenter.goToArticlePage(articleLists.get(position).getLink(), articleLists.get(position).getTitle())
         );
         mAdapter.disableLoadMoreIfNotFullPage(mRecycler);
         mAdapter.setOnLoadMoreListener(() -> mRecycler.post(() -> mPresenter.loadMoreArticleToView()), mRecycler);
@@ -155,4 +157,29 @@ public class HomeFragment extends BaseMainFragment implements HomeContract.View 
         return R.id.home_toolbar;
     }
 
+    @Override
+    public void goToSearchPage() {
+        start(SearchFragment.newInstance());
+    }
+
+    @Override
+    public void goToArticlePage(String url, String title) {
+        start(WebFragment.newInstance(url, title));
+    }
+
+    @Override
+    public void showFailPage() {
+        post(() -> {
+            mEmptyView.setVisibility(View.VISIBLE);
+            mRecycler.setVisibility(View.GONE);
+        });
+    }
+
+    @Override
+    public void hideFailPage() {
+        post(() -> {
+            mEmptyView.setVisibility(View.GONE);
+            mRecycler.setVisibility(View.VISIBLE);
+        });
+    }
 }

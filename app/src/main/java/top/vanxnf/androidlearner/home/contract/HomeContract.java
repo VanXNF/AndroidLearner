@@ -27,6 +27,10 @@ public interface HomeContract {
         void hideLoadingMore(boolean isCompeted, boolean isEnd);
         void showToast(Integer resId);
         void showToast(CharSequence text);
+        void showFailPage();
+        void hideFailPage();
+        void goToSearchPage();
+        void goToArticlePage(String url, String title);
     }
 
     interface Presenter {
@@ -34,5 +38,7 @@ public interface HomeContract {
         void loadArticleToView();
         void loadMoreArticleToView();
         void reloadArticleToView();
+        void goToSearchPage();
+        void goToArticlePage(String url, String title);
     }
 }

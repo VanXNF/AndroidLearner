@@ -39,7 +39,9 @@ public class SearchPresenter implements SearchContract.Presenter {
             @Override
             public void onFailure(Call call, IOException e) {
                 mView.hideLoading();
-                mView.showFailPage();
+                if (mModel.getKeyList().size() == 0) {
+                    mView.showFailPage();
+                }
                 mView.showToast(R.string.network_error_please_try_again);
                 Log.d(TAG, "onFailure: loadHotKeyDataToView");
             }
@@ -50,9 +52,12 @@ public class SearchPresenter implements SearchContract.Presenter {
                 HotKey hotKey = new Gson().fromJson(response.body().string(), HotKey.class);
                 if (hotKey != null) {
                     mView.hideFailPage();
+                    mModel.setKeyList(hotKey.getKeys());
                     mView.showHotKey(hotKey.getKeys());
                 } else {
-                    mView.showFailPage();
+                    if (mModel.getKeyList().size() == 0) {
+                        mView.showFailPage();
+                    }
                     mView.showToast(R.string.data_error_please_try_again);
                 }
                 Log.d(TAG, "onResponse: loadHotKeyDataToView");

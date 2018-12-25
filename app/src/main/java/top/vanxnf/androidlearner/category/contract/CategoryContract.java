@@ -6,9 +6,9 @@ import top.vanxnf.androidlearner.entity.Category;
 
 public interface CategoryContract {
     interface Model {
+        void setCategoryList(List<Category> categories);
         List<Category> getCategoryList();
         void getCategoryData(okhttp3.Callback callback);
-        void refreshCategoryData(okhttp3.Callback callback);
     }
 
     interface View {
@@ -18,6 +18,8 @@ public interface CategoryContract {
         void hideLoading();
         void showToast(Integer resId);
         void showToast(CharSequence text);
+        void showFailPage();
+        void hideFailPage();
         void goToSearchPage();
         void goToDetailPage(int cid, String name);
     }
@@ -28,6 +30,5 @@ public interface CategoryContract {
         void reloadCategoryDataToView();
         void goToSearchPage();
         void goToDetailPage(int cid, String name);
-
     }
 }

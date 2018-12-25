@@ -26,6 +26,8 @@ public interface DetailContract {
         void showMoreArticle(List<Article.DataBean.ArticleData> articles);
         void hideLoading();
         void hideLoadingMore(boolean isCompeted, boolean isEnd);
+        void showFailPage();
+        void hideFailPage();
         void showToast(Integer resId);
         void showToast(CharSequence text);
 

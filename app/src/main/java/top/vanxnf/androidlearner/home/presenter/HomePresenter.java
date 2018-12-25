@@ -1,11 +1,13 @@
 package top.vanxnf.androidlearner.home.presenter;
 
+import android.text.Html;
 import android.util.Log;
 import android.view.View;
 
 import com.google.gson.Gson;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import okhttp3.Call;
@@ -39,6 +41,9 @@ public class HomePresenter implements HomeContract.Presenter {
             @Override
             public void onFailure(Call call, IOException e) {
                 mView.hideLoading();
+                if (mModel.getArticleList().size() == 0) {
+                    mView.showFailPage();
+                }
                 mView.showToast(R.string.network_error_please_try_again);
                 Log.d(TAG, "onFailure: loadArticleToView");
             }
@@ -46,13 +51,17 @@ public class HomePresenter implements HomeContract.Presenter {
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 Article article = new Gson().fromJson(response.body().string(), Article.class);
-                if (article != null) {
-                    List<Article> articles = mModel.getArticleList();
+                if (article != null && article.getData().getTotal() != 0 && article.getErrorCode() == 0) {
+                    List<Article> articles = new ArrayList<>();
                     articles.add(article);
                     mModel.setArticleList(articles);
-                    mModel.setAllPages(article.getData().getPageCount());
+                    mModel.setAllPages(article.getData().getTotal());
+                    mView.hideFailPage();
                     mView.showArticle(article.getData().getDatas());
                 } else {
+                    if (mModel.getArticleList().size() == 0) {
+                        mView.showFailPage();
+                    }
                     mView.showToast(R.string.data_error_please_try_again);
                 }
                 mView.hideLoading();
@@ -76,7 +85,7 @@ public class HomePresenter implements HomeContract.Presenter {
                 @Override
                 public void onResponse(Call call, Response response) throws IOException {
                     Article article = new Gson().fromJson(response.body().string(), Article.class);
-                    if (article != null) {
+                    if (article != null && article.getErrorCode() == 0) {
                         List<Article> articles = mModel.getArticleList();
                         articles.add(article);
                         mModel.setArticleList(articles);
@@ -97,5 +106,15 @@ public class HomePresenter implements HomeContract.Presenter {
     @Override
     public void reloadArticleToView() {
         loadArticleToView();
+    }
+
+    @Override
+    public void goToSearchPage() {
+        mView.goToSearchPage();
+    }
+
+    @Override
+    public void goToArticlePage(String url, String title) {
+        mView.goToArticlePage(url, Html.fromHtml(title).toString());
     }
 }

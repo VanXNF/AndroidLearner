@@ -107,9 +107,6 @@ public class CategoryFragment extends BaseMainFragment implements CategoryContra
         mRecycler.setLayoutManager(new LinearLayoutManager(mActivity));
         mAdapter = new CategoryAdapter(categories);
         mAdapter.openLoadAnimation();
-        mAdapter.setOnItemChildClickListener((BaseQuickAdapter adapter, View v, int position) -> {
-            mPresenter.goToDetailPage(categories.get(position).getId(), categories.get(position).getName());
-        });
         mAdapter.addOnTagItemClickListener((int index, List<Category.DataBean.Subcategory> dataBean) ->
             mPresenter.goToDetailPage(dataBean.get(index).getId(), dataBean.get(index).getName())
         );

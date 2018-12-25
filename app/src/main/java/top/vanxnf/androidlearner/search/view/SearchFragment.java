@@ -8,12 +8,15 @@ import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.zhy.view.flowlayout.FlowLayout;
@@ -23,6 +26,8 @@ import com.zhy.view.flowlayout.TagFlowLayout;
 import java.util.ArrayList;
 import java.util.List;
 
+import me.yokeyword.fragmentation.anim.DefaultHorizontalAnimator;
+import me.yokeyword.fragmentation.anim.FragmentAnimator;
 import top.vanxnf.androidlearner.MainActivity;
 import top.vanxnf.androidlearner.R;
 import top.vanxnf.androidlearner.base.BaseBackFragment;
@@ -93,9 +98,7 @@ public class SearchFragment extends BaseBackFragment implements SearchContract.V
             mPresent.goToResultPage(keyword);
             return true;
         });
-        mEmptyView.setOnClickListener((v) -> {
-            mPresent.reloadHotKeyDataToView();
-        });
+        mEmptyView.setOnClickListener((v) -> mPresent.reloadHotKeyDataToView());
         mSearchEditView.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
@@ -112,6 +115,13 @@ public class SearchFragment extends BaseBackFragment implements SearchContract.V
                     mClearButton.setVisibility(View.GONE);
                 }
             }
+        });
+        mSearchEditView.setOnEditorActionListener((TextView v, int actionId, KeyEvent event) -> {
+            if(actionId == EditorInfo.IME_ACTION_SEARCH) {
+                String text = mSearchEditView.getText().toString().trim();
+                mPresent.goToResultPage(text);
+            }
+            return false;
         });
         mClearButton.setOnClickListener((v) -> mSearchEditView.setText(""));
     }
@@ -169,6 +179,7 @@ public class SearchFragment extends BaseBackFragment implements SearchContract.V
 
     @Override
     public void showResultPage(String keyword) {
+        hideSoftInput();
         start(ResultFragment.newInstance(keyword));
     }
 }

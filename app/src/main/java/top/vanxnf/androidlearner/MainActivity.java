@@ -4,13 +4,12 @@ package top.vanxnf.androidlearner;
 import android.content.res.ColorStateList;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.view.MenuItem;
-import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.gyf.barlibrary.ImmersionBar;
@@ -26,7 +25,7 @@ import top.vanxnf.androidlearner.base.BaseMainFragment;
 public class MainActivity extends BaseActivity
         implements NavigationView.OnNavigationItemSelectedListener, BaseMainFragment.OnFragmentOpenDrawerListener {
 
-    public static final String TAG = MainActivity.class.getSimpleName();
+//    public static final String TAG = MainActivity.class.getSimpleName();
 
     // 再点一次退出程序时间设置
     private static final long WAIT_TIME = 2000L;
@@ -34,8 +33,8 @@ public class MainActivity extends BaseActivity
 
     private DrawerLayout mDrawer;
     private NavigationView mNavigationView;
-    private TextView mTvName;   // NavigationView上的名字
-    private ImageView mImgNav;  // NavigationView上的头像
+//    private TextView mTvName;   // NavigationView上的名字
+//    private ImageView mImgNav;  // NavigationView上的头像
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -98,7 +97,7 @@ public class MainActivity extends BaseActivity
     }
 
     @Override
-    public boolean onNavigationItemSelected(final MenuItem item) {
+    public boolean onNavigationItemSelected(@NonNull final MenuItem item) {
         mDrawer.closeDrawer(GravityCompat.START);
 
         mDrawer.postDelayed(() -> {

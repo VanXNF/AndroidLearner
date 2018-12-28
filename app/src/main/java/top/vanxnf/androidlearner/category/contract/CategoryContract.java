@@ -4,6 +4,10 @@ import java.util.List;
 
 import top.vanxnf.androidlearner.entity.Category;
 
+/**
+ * 类别页契约类
+ * @author 许楠钒
+ * */
 public interface CategoryContract {
     interface Model {
         void setCategoryList(List<Category> categories);

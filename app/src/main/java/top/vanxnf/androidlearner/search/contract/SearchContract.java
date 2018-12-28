@@ -1,10 +1,11 @@
 package top.vanxnf.androidlearner.search.contract;
 
-
 import java.util.List;
-
 import top.vanxnf.androidlearner.entity.HotKey;
-
+/**
+ * 搜索页
+ * @author 许楠钒
+ * */
 public interface SearchContract {
     interface Model {
         void setKeyList(List<HotKey.Key> keyList);

@@ -4,7 +4,10 @@ import java.util.List;
 
 import top.vanxnf.androidlearner.entity.Article;
 
-
+/**
+ * 首页契约类
+ * @author 许楠钒
+ * */
 public interface HomeContract {
     interface Model {
         int getCurrentPage();

@@ -37,8 +37,6 @@ public class MainActivity extends BaseActivity
     private TextView mTvName;   // NavigationView上的名字
     private ImageView mImgNav;  // NavigationView上的头像
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -92,9 +90,6 @@ public class MainActivity extends BaseActivity
         }
     }
 
-    /**
-     * 打开抽屉
-     */
     @Override
     public void onOpenDrawer() {
         if (!mDrawer.isDrawerOpen(GravityCompat.START)) {
@@ -113,9 +108,6 @@ public class MainActivity extends BaseActivity
 
             if (id == R.id.nav_home) {
                 HomeFragment fragment = findFragment(HomeFragment.class);
-                Bundle newBundle = new Bundle();
-                newBundle.putString("from", "From:" + topFragment.getClass().getSimpleName());
-                fragment.putNewBundle(newBundle);
                 myHome.start(fragment, BaseFragment.SINGLETASK);
             } else if (id == R.id.nav_category) {
                 CategoryFragment fragment = findFragment(CategoryFragment.class);
